@@ -9,11 +9,12 @@ var cors = require('cors')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var videos = require('./routes/videos');
 
 var app = express();
 
 // view engine setup
-app.set('view engine', 'html');
+//app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -22,11 +23,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'dist')));
+//app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/video', videos);
 
 //Manually enable cors
 app.use(function(req, res, next) {

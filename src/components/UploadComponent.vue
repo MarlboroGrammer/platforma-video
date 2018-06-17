@@ -5,7 +5,7 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <span class="glyphicon glyphicon-cloud-upload"></span>
-            <h2>File Uploader</h2>
+            <h2>Select your files to be uploaded</h2>
             <div class="progress">
               <div class="progress-bar" role="progressbar"></div>
             </div>
