@@ -26,6 +26,15 @@
                 </div>
             </div>
             <div id="products" class="row list-group">
+                <div v-if="videos.length == 0">
+                    <h1 class="novid">No videos uploaded.</h1>
+                    <router-link to="/video/new">
+                        <br/>
+                      <button class="btn btn-primary">
+                        Go to upload <span class="glyphicon glyphicon-cloud-upload"></span>
+                      </button>
+                    </router-link>
+                </div>
                 <div class="item  ol-xs-4 col-lg-4 list-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
@@ -84,6 +93,13 @@ export default {
 }
 </script>
 <style>
+    .novid{
+        margin-top: 15px;
+        margin-left: 150px;
+        color: #68757E;
+        font-size: 6em;
+        font-family: 'Poppins', sans-serif;
+    }
     .loading{
         position: absolute;
         top: 40%;

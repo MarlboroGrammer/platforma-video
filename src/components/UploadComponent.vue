@@ -60,6 +60,7 @@ export default {
           success: function (data) {
             console.log('upload successful!\n' + data)
             self.$router.push({name: 'VideoConfigComponent', params: {videos: data}})
+            localStorage.setItem('videos', JSON.stringify(data))
           },
           xhr: function () {
             // create an XMLHttpRequest
