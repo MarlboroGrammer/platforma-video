@@ -3,6 +3,11 @@ var formidable = require('formidable')
 var router = express.Router()
 var path = require('path')
 var fs = require('fs')
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg')
+const ffmpeg = require('fluent-ffmpeg');
+
+ffmpeg.setFfmpegPath(ffmpegInstaller.path)
+
 let array = []
 
 /* GET home page. */
@@ -21,8 +26,25 @@ router.post('/upload', function(req, res){
   // rename it to it's orignal name
   form.on('file', function(field, file) {
     fs.rename(file.path , path.join(form.uploadDir, file.name))
+    
+    // Call ffmpeg to take screenshots
+    let thumb = ''
+    var proc = new ffmpeg(path.join(form.uploadDir, file.name))
+    .on('filenames', function(filenames) {
+      console.log('screenshots are ' + filenames)
+      thumb = filenames
+    })
+    .takeScreenshots(
+      {
+        count: 1,
+        filename: file.name.split('.')[0],
+        timemarks: [ '180' ] // number of seconds
+      }, 
+      path.join(__dirname, '../src/assets/thumbnails'), function(err) {
+        console.log('screenshots were saved', err)
+      })
     //Database logic
-    array.push({name: file.name})
+    array.push({title: file.name, thumbnail: thumb})
   })
   // log any errors that occur
   form.on('error', function(err) {

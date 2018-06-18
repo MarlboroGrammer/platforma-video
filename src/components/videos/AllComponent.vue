@@ -29,10 +29,7 @@
                 <div class="item  ol-xs-4 col-lg-4 list-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" src="video.thumbnail" alt="Thumbnail" />
-                        </div>
-                        <div vif="!video.thumbnail">
-                            <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" width="350" />
+                            <img class="group list-group-image" :src="getImgUrl(video.thumbnail)" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading">
@@ -72,12 +69,16 @@ export default {
     listView () {
       $('#products .item').removeClass('grid-group-item')
       $('#products .item').addClass('list-group-item')
+    },
+    getImgUrl (pic) {
+      return require('../../assets/thumbnails/' + pic)
     }
   },
   mounted: function () {
     VideosService.getAll().then(vids => {
       this.loading = false
       this.videos = vids.data
+      this.videos = JSON.parse(this.videos)
     })
   }
 }

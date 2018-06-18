@@ -43,6 +43,17 @@ exports.fixtures = function(data) {
   }, done)
 }
 
+exports.persistArray = function (tableName, array) {
+  var pool = state.pool
+  if (!pool) return done(new Error('Missing database connection.'))
+
+  async.each(array, function (element ,cb) {
+    var keys = Object.keys(v)
+    var values = keys.map(function (key) { return "'" + v[key] + "'" })
+    pool.query('INSERT INTO ' + tableName + ' (' + keys.join(',') + ') VALUES (' + values.join(',') + ')', cb)
+  }, done)
+}
+
 exports.drop = function(tables, done) {
   var pool = state.pool
   if (!pool) return done(new Error('Missing database connection.'))
