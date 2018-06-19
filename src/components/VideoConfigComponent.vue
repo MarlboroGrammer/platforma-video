@@ -28,10 +28,14 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-success pull-right btn-lg" v-on:click="submit" >
-          <span class="glyphicon glyphicon-ok"></span>
-          Save
-        </button>
+          <button class="btn btn-success pull-right btn-sm" v-on:click="submit" >
+            <span class="glyphicon glyphicon-ok"></span>
+            Save
+          </button>
+          <button class="btn btn-danger pull-right btn-sm" >
+            <span class="glyphicon glyphicon-trash"></span>
+            Cancel
+          </button>
       </div>
     </div>
   </div>
@@ -53,6 +57,7 @@ export default {
     submit () {
       this.videos.forEach(v => {
         v.link = this.randomId()
+        // add the rest of data
       })
       VideosService.addVideos(this.videos).then(resp => {
         this.loading = true
