@@ -28,11 +28,11 @@
             </div>
           </div>
         </div>
-          <button class="btn btn-success pull-right btn-sm" v-on:click="submit" >
+        <button class="btn btn-success pull-right btn-sm" v-on:click="submit" >
             <span class="glyphicon glyphicon-ok"></span>
             Save
           </button>
-          <button class="btn btn-danger pull-right btn-sm" >
+          <button class="btn btn-danger pull-right btn-sm" v-on:click="cancel">
             <span class="glyphicon glyphicon-trash"></span>
             Cancel
           </button>
@@ -40,62 +40,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import VideosService from '@/services/VideosService'
-
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      videos: JSON.parse(localStorage.getItem('videos')) || this.$route.params.videos,
-      imgsArr: [],
-      loading: false
-    }
-  },
-  methods: {
-    submit () {
-      this.videos.forEach(v => {
-        v.link = this.randomId()
-        // add the rest of data
-      })
-      VideosService.addVideos(this.videos).then(resp => {
-        this.loading = true
-        if (resp.data === 'success') {
-          this.loading = false
-          this.$router.push({name: 'AllComponent'})
-        }
-      })
-    },
-    show () {
-      console.log(this.videos)
-      console.log('Testing random id gen: ', this.randomId())
-    },
-    randomId () {
-      return Math.random().toString(32).replace('0.', '')
-    },
-    getImgUrl (pic) {
-      if (!this.noVideos()) {
-        return require('../assets/thumbnails/' + pic)
-      }
-      return '#'
-    },
-    noVideos () {
-      return this.videos === undefined || this.videos === 'undefined' ||
-        this.videos === null || this.videos.length === 0
-    }
-  },
-  beforeCreate: function () {
-    this.loading = true
-  },
-  mounted: function () {
-    console.log('videos array: ', this.videos)
-    console.log('No videos?', this.noVideos())
-    console.log('LocalStorage videos', localStorage.getItem('videos'))
-    this.loading = false
-  }
-}
-</script>
 
 <style>
   .error{
@@ -114,3 +58,63 @@ export default {
     text-align: center;
   }
 </style>
+
+<script>
+import VideosService from '@/services/VideosService'
+
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      videos: JSON.parse(localStorage.getItem('videos')) || this.$route.params.videos,
+      imgsArr: [],
+      loading: false
+    }
+  },
+  methods: {
+    submit () {
+      this.loading = true
+      this.videos.forEach(v => {
+        v.link = this.randomId()
+      })
+      VideosService.addVideos(this.videos).then(resp => {
+        if (resp.data === 'success') {
+          localStorage.setItem('videos', {})
+          this.loading = false
+          this.$router.push({name: 'AllComponent'})
+        }
+      })
+    },
+    show () {
+      console.log(this.videos)
+      console.log('Testing random id gen: ', this.randomId())
+    },
+    randomId () {
+      return Math.random().toString(32).replace('0.', '')
+    },
+    getImgUrl (pic) {
+      if (!this.noVideos() && !this.loading) {
+        return require('../assets/thumbnails/' + pic)
+      }
+      return '#'
+    },
+    noVideos () {
+      return this.videos === undefined || this.videos === 'undefined' ||
+        this.videos === null || this.videos.length === 0
+    },
+    cancel () {
+      localStorage.setItem('videos', {})
+      this.$router.push({name: 'AllComponent'})
+    }
+  },
+  beforeCreate: function () {
+    this.loading = true
+  },
+  mounted: function () {
+    console.log('videos array: ', this.videos)
+    console.log('No videos?', this.noVideos())
+    console.log('LocalStorage videos', localStorage.getItem('videos'))
+    this.loading = false
+  }
+}
+</script>

@@ -36,17 +36,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  mounted: function () {
-    $('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active')
-    })
-  }
-}
-</script>
-
 <style>
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
@@ -194,3 +183,14 @@ a.article, a.article:hover {
 }
 
 </style>
+
+<script>
+export default {
+  name: 'App',
+  mounted: function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active')
+    })
+  }
+}
+</script>

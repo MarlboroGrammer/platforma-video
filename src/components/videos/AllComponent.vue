@@ -1,4 +1,5 @@
-`<template>
+
+<template>
     <div class="container">
         <div v-if="loading">
             <img src="https://gifimage.net/wp-content/uploads/2017/09/ajax-loading-gif-transparent-background-4.gif" class="loading">
@@ -58,40 +59,7 @@
         </div>
     </div>
 </template>
-<script>
 
-import VideosService from '@/services/VideosService'
-
-export default {
-  data () {
-    return {
-      videos: [],
-      loading: true
-    }
-  },
-  methods: {
-    gridView () {
-      console.log('Hey')
-      $('#products .item').removeClass('list-group-item')
-      $('#products .item').addClass('grid-group-item')
-    },
-    listView () {
-      $('#products .item').removeClass('grid-group-item')
-      $('#products .item').addClass('list-group-item')
-    },
-    getImgUrl (pic) {
-      return require('../../assets/thumbnails/' + pic)
-    }
-  },
-  mounted: function () {
-    VideosService.getAll().then(vids => {
-      this.loading = false
-      this.videos = vids.data
-      this.videos = JSON.parse(this.videos)
-    })
-  }
-}
-</script>
 <style>
     .novid{
         margin-top: 15px;
@@ -166,3 +134,38 @@ export default {
         margin: 0 0 11px;
     }
 </style>
+
+<script>
+
+import VideosService from '@/services/VideosService'
+
+export default {
+  data () {
+    return {
+      videos: [],
+      loading: true
+    }
+  },
+  methods: {
+    gridView () {
+      console.log('Hey')
+      $('#products .item').removeClass('list-group-item')
+      $('#products .item').addClass('grid-group-item')
+    },
+    listView () {
+      $('#products .item').removeClass('grid-group-item')
+      $('#products .item').addClass('list-group-item')
+    },
+    getImgUrl (pic) {
+      return require('../../assets/thumbnails/' + pic)
+    }
+  },
+  mounted: function () {
+    VideosService.getAll().then(vids => {
+      this.loading = false
+      this.videos = vids.data
+      this.videos = JSON.parse(this.videos)
+    })
+  }
+}
+</script>

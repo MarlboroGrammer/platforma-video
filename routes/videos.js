@@ -18,6 +18,7 @@ router.post('/save', function (req, res) {
     var keys = Object.keys(v)
     var values = keys.map(function (key) { return "'" + v[key] + "'" })
     db.get().query('INSERT INTO videos (' + keys.join(',') + ') VALUES (' + values.join(',') + ')', (err, rows) => {
+      console.log(err)
     	if (err) 
     	 res.status(500).send(err)
     })
