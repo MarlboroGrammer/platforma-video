@@ -19,7 +19,7 @@
               <span class="glyphicon glyphicon-film"></span> {{video.title}}
             </div>
             <div class="panel-body">
-              <img :src="getImgUrl(video.thumbnail)" width="300">
+              <img :src="'http://localhost:3000/i/'+ video.thumbnail" width="300">
               <hr>
               <div class="form-group">
                 <label class="pull-left">Download link</label>
@@ -92,12 +92,13 @@ export default {
     randomId () {
       return Math.random().toString(32).replace('0.', '')
     },
-    getImgUrl (pic) {
+    /* getImgUrl (pic) {
       if (!this.noVideos() && !this.loading) {
-        return require('../assets/thumbnails/' + pic)
+        return require('~static/uploads/' + pic) || ''
       }
       return '#'
     },
+    */
     noVideos () {
       return this.videos === undefined || this.videos === 'undefined' ||
         this.videos === null || this.videos.length === 0

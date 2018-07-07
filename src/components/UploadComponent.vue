@@ -52,7 +52,7 @@ export default {
 
         let self = this
         $.ajax({
-          url: 'http://localhost:3000/upload',
+          url: 'http://localhost:3000/api/upload',
           type: 'POST',
           data: formData,
           processData: false,

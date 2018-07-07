@@ -18,6 +18,9 @@ router.get('/configure', function (req, res) {
 router.post('/upload', function(req, res){
   // create an incoming form object
   var form = new formidable.IncomingForm()
+  //Specify maximum file size, in this case we need 5GB
+  form.maxFileSize = 5000 * 1024 * 1024;
+
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true
   // store all uploads in the /uploads directory
@@ -41,7 +44,7 @@ router.post('/upload', function(req, res){
         filename: file.name.split('.')[0],
         timemarks: [ '180' ] // number of seconds
       }, 
-      path.join(__dirname, '../src/assets/thumbnails'), function(err) {
+      path.join(form.uploadDir, `../uploads/thumbnails/`)  , function(err) {
         console.log('screenshots were saved', err)
       })
     //Database logic

@@ -16,6 +16,7 @@ var app = express();
 // view engine setup
 app.set('view engine', 'html');
 
+const BASE_URL = '/api'
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
@@ -24,10 +25,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
-
-app.use('/', index);
-app.use('/users', users);
-app.use('/video', videos);
+//Serve thumbnails
+app.use('/i', express.static('uploads/thumbnails'));
+app.use(BASE_URL + '/', index);
+app.use(BASE_URL + '/users', users);
+app.use(BASE_URL + '/video', videos);
 
 //Manually enable cors
 app.use(function(req, res, next) {

@@ -39,7 +39,7 @@
                 <div class="item  ol-xs-4 col-lg-4 list-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" :src="getImgUrl(video.thumbnail)" alt="Thumbnail" width="350" />
+                            <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading">
@@ -157,8 +157,15 @@ export default {
       $('#products .item').addClass('list-group-item')
     },
     getImgUrl (pic) {
-      return require('../../assets/thumbnails/' + pic)
+      return require(`../../../uploads/thumbnails/${pic}`) || ''
     }
+  },
+  beforeRouteUpdate () {
+    VideosService.getAll().then(vids => {
+      this.loading = false
+      this.videos = vids.data
+      this.videos = JSON.parse(this.videos)
+    })
   },
   mounted: function () {
     VideosService.getAll().then(vids => {

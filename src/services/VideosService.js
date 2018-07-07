@@ -1,6 +1,6 @@
 import Api from './Api'
 
-const PREFIX = 'video'
+const PREFIX = '/api/video'
 export default {
 
   getAll () {
