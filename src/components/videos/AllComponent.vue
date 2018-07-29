@@ -151,6 +151,8 @@
     .item.list-group-item img
     {
         float: left;
+        width: 350px;
+        height: 200px;
     }
     .item.list-group-item:after
     {
@@ -204,11 +206,13 @@ export default {
     })
   },
   mounted: function () {
-    VideosService.getAll(this.$store.getters.getToken).then(vids => {
-      this.loading = false
-      this.videos = vids.data
-      this.videos = JSON.parse(this.videos)
-    })
+    setTimeout(() => {
+      VideosService.getAll(this.$store.getters.getToken).then(vids => {
+        this.loading = false
+        this.videos = vids.data
+        this.videos = JSON.parse(this.videos)
+      })
+    }, 1000)
   }
 }
 </script>

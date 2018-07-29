@@ -61,7 +61,7 @@ export default {
           contentType: false,
           success: function (data) {
             console.log('upload successful!\n' + data)
-            VideosService.addVideos(data).then(resp => {
+            VideosService.addVideos(data, self.$store.getters.getToken).then(resp => {
               if (resp.data === 'success') {
                 self.loading = false
                 self.$router.push({name: 'AllComponent'})

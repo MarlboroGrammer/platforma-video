@@ -7,7 +7,8 @@ export default {
     let config = { headers: { 'Authorization': 'JWT ' + token } }
     return Api().get(`${PREFIX}/`, config)
   },
-  addVideos (vidsArray) {
-    return Api().post(`${PREFIX}/save`, vidsArray)
+  addVideos (vidsArray, token) {
+    let config = { headers: { 'Authorization': 'JWT ' + token } }
+    return Api().post(`${PREFIX}/save`, vidsArray, config)
   }
 }
