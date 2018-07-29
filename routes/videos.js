@@ -1,9 +1,11 @@
 var express = require('express')
 var db = require('../helper/db.js')
+var path = require('path')
+var tokenMW = require('./middleware/verifyToken.js')
 
 var router = express.Router()
 
-router.get('/', function (req, res) {
+router.get('/', tokenMW.authenticate, function (req, res) {
   db.get().query('SELECT * FROM videos', function (err, rows) {
     if (err) 
     	 return done(err)
@@ -11,7 +13,7 @@ router.get('/', function (req, res) {
   })
 })
 
-router.post('/save', function (req, res) {
+router.post('/save', tokenMW.authenticate, function (req, res) {
   let count = 0
   let videos = Array.from(req.body)
   videos.forEach(v => {
@@ -26,4 +28,20 @@ router.post('/save', function (req, res) {
   res.send('success')
 })
 
+router.get('/:link', function (req, res) {
+  let quality = parseInt(req.query.q)
+  let link = req.params.link
+  let fileToSend = link
+  switch (quality) {
+    case 480:
+      fileToSend = link + '_h264_480.mp4'
+      break
+    case 720:
+      fileToSend = link + '_h264_720.mp4'
+      break
+  }
+  console.log(fileToSend)
+  res.sendFile(path.join(__dirname, '../encoder/Encodes/' + fileToSend))
+//  res.sendFile(path.resolve('../encoder/Encodes/' + fileToSend))
+})
 module.exports = router

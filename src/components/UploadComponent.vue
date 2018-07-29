@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import VideosService from '@/services/VideosService'
+
 export default {
   name: 'HelloWorld',
   data () {
@@ -59,8 +61,12 @@ export default {
           contentType: false,
           success: function (data) {
             console.log('upload successful!\n' + data)
-            self.$router.push({name: 'VideoConfigComponent', params: {videos: data}})
-            localStorage.setItem('videos', JSON.stringify(data))
+            VideosService.addVideos(data).then(resp => {
+              if (resp.data === 'success') {
+                self.loading = false
+                self.$router.push({name: 'AllComponent'})
+              }
+            })
           },
           xhr: function () {
             // create an XMLHttpRequest

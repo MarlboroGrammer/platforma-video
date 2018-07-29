@@ -5,6 +5,11 @@
             <img src="https://gifimage.net/wp-content/uploads/2017/09/ajax-loading-gif-transparent-background-4.gif" class="loading">
         </div>
         <div v-if="!loading">
+            <div v-if="alert">
+                <div class="alert alert-success" role="alert">
+                  Link copied!
+                </div>
+            </div>
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -36,20 +41,42 @@
                       </button>
                     </router-link>
                 </div>
-                <div class="item  ol-xs-4 col-lg-4 list-group-item" v-for="video in videos" :key="video.id">
+                <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
                             <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading">
-                                {{video.title}}</h4>
+                                {{video.title}}
+                            </h4>
                             <p class="group inner list-group-item-text">
-                                Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                                <strong>Encoded:</strong>
+                                <span v-if="video.encoded">
+                                    Yes <br><span v-if="video.hd_size"><strong>HD Size:</strong>  {{Math.floor(video.hd_size / 1024 / 1024)}} MBs</span>
+                                    <span v-if="video.sd_size"><strong>SD Size:</strong>  {{Math.floor(video.sd_size / 1024 / 1024)}} MBs</span>
+                                </span>
+                                <span v-if="!video.encoded">No</span><br>
+                                <strong>HD Processed:</strong>
+                                <span v-if="video.hd_encode === 'y'">Yes</span>
+                                <span v-if="video.hd_encode === 'n'">No</span>
+                                <span v-if="video.hd_encode === 'p'">Pending</span><br>
+                                <strong>SD Processed:</strong>
+                                <span v-if="video.sd_encode === 'y'">Yes</span>
+                                <span v-if="video.sd_encode === 'n'">No</span>
+                                <span v-if="video.sd_encode === 'p'">Pending</span><br>
+                                <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs
+                            </p>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <a :href='"/video/" + video.id'>Hello</a>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary" v-on:click="getLink(video.link)">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy link
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-danger" v-on:click="getLink(video.link)">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy link
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +170,8 @@ export default {
   data () {
     return {
       videos: [],
-      loading: true
+      loading: true,
+      alert: false
     }
   },
   methods: {
@@ -158,17 +186,25 @@ export default {
     },
     getImgUrl (pic) {
       return require(`../../../uploads/thumbnails/${pic}`) || ''
+    },
+    getLink (vidId) {
+      let vidLink = 'http://localhost:3000/api/video/' + vidId + '?q=480'
+      navigator.clipboard.writeText(vidLink)
+      this.alert = true
+      setTimeout(() => {
+        this.alert = false
+      }, 1000)
     }
   },
   beforeRouteUpdate () {
-    VideosService.getAll().then(vids => {
+    VideosService.getAll(this.$store.getters.getToken).then(vids => {
       this.loading = false
       this.videos = vids.data
       this.videos = JSON.parse(this.videos)
     })
   },
   mounted: function () {
-    VideosService.getAll().then(vids => {
+    VideosService.getAll(this.$store.getters.getToken).then(vids => {
       this.loading = false
       this.videos = vids.data
       this.videos = JSON.parse(this.videos)

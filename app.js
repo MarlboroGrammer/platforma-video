@@ -31,10 +31,11 @@ app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
 
+
 //Manually enable cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 // catch 404 and forward to error handler

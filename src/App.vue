@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="wrapper">
+    <div class="wrapper" v-if="loggedIn">
       <!-- Sidebar Holder -->
       <nav id="sidebar">
         <div class="sidebar-header">
@@ -25,6 +25,9 @@
           <li>
             <a href="#">Contact</a>
           </li>
+          <li>
+            <a href="#" @click="logout">Logout</a>
+          </li>
         </ul>
       </nav>
 
@@ -32,6 +35,9 @@
       <div id="content">
         <router-view/>
       </div>
+    </div>
+    <div v-if="!loggedIn">
+      <LoginComponent/>
     </div>
   </div>
 </template>
@@ -56,6 +62,14 @@ a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+}
+.btn-primary {
+  background-color: #7386D5;
+  border: 1px solid #7386D5;
+}
+.btn-primary:hover {
+  background-color: #6d7fcc;
+  border: 1px solid #6d7fcc;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -185,8 +199,23 @@ a.article, a.article:hover {
 </style>
 
 <script>
+import LoginComponent from '@/components/LoginComponent'
 export default {
   name: 'App',
+  components: {
+    'LoginComponent': LoginComponent
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('logout', null)
+      window.location.href = '/'
+    }
+  },
+  data () {
+    return {
+      loggedIn: this.$store.getters.isLoggedIn
+    }
+  },
   mounted: function () {
     $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active')

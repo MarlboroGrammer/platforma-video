@@ -74,9 +74,6 @@ export default {
   methods: {
     submit () {
       this.loading = true
-      this.videos.forEach(v => {
-        v.link = this.randomId()
-      })
       VideosService.addVideos(this.videos).then(resp => {
         if (resp.data === 'success') {
           localStorage.setItem('videos', {})
@@ -84,13 +81,6 @@ export default {
           this.$router.push({name: 'AllComponent'})
         }
       })
-    },
-    show () {
-      console.log(this.videos)
-      console.log('Testing random id gen: ', this.randomId())
-    },
-    randomId () {
-      return Math.random().toString(32).replace('0.', '')
     },
     /* getImgUrl (pic) {
       if (!this.noVideos() && !this.loading) {
