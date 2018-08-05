@@ -4,6 +4,7 @@ var router = express.Router()
 var formidable = require('formidable')
 var path = require('path')
 var fs = require('fs')
+var os = require('os')
 
 var diskspace = require('diskspace')
 
@@ -20,7 +21,8 @@ var array = []
 
 /* GET home page. */
 router.get('/diskinfo', function (req, res) {
-  diskspace.check('C:/', function (err ,result) {
+  let disk = os.type() === 'Windows_NT' ? 'C:/' : '/'
+  diskspace.check(disk, function (err ,result) {
     return res.send(result)
   })
 })
