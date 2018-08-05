@@ -81,6 +81,7 @@
 
 <script>
 import AuthService from '@/services/AuthService'
+import store from '@/store/store'
 
 export default {
   name: 'Login',
@@ -97,8 +98,8 @@ export default {
       this.error = false
       event.preventDefault()
       AuthService.login({email: this.email, password: this.password}).then(resp => {
-        this.$store.dispatch('setToken', resp.data.token)
-        this.$store.dispatch('setUser', resp.data.user)
+        store.dispatch('setToken', resp.data.token)
+        store.dispatch('setUser', resp.data.user)
         window.location.href = '/'
       }).catch(err => {
         this.error = true

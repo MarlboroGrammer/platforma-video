@@ -6,9 +6,9 @@ var tokenMW = require('./middleware/verifyToken.js')
 var router = express.Router()
 
 router.get('/', tokenMW.authenticate, function (req, res) {
-  db.get().query('SELECT * FROM videos', function (err, rows) {
+  db.get().query('SELECT * FROM videos ORDER BY id DESC', function (err, rows) {
     if (err) 
-    	 return done(err)
+    	 return res.send(err)
     res.json(JSON.stringify(rows))
   })
 })
@@ -17,13 +17,26 @@ router.post('/save', tokenMW.authenticate, function (req, res) {
   
   let count = 0
   let videos = Array.from(req.body)
+  console.log('Video API : Videos about to be saved:', videos)
   videos.forEach(v => {
     var keys = Object.keys(v)
     var values = keys.map(function (key) { return "'" + v[key] + "'" })
     db.get().query('INSERT INTO videos (' + keys.join(',') + ') VALUES (' + values.join(',') + ')', (err, rows) => {
-      console.log(err)
+      console.log('Err is', err)
     	if (err) 
     	 res.status(500).send(err)
+    })
+  })
+  res.send('success')
+})
+
+router.delete('/delete', tokenMW.authenticate, function (req, res) {
+  let videoIds = Array.from(req.body)
+  console.log('Boiz about to be gone:', videoIds)
+  videoIds.forEach(id => {
+    db.get().query('DELETE FROM videos WHERE id = ?', [id], function (err, rows) {
+      if (err)
+        res.status(500).send (err)
     })
   })
   res.send('success')

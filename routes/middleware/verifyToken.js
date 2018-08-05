@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken')
 
 module.exports.authenticate = function (req, res, next) {
-  console.log('Middleware header: ', req.headers)
+  console.log('Header boi :', req.headers)
   var header = req.headers.authorization
   if (header) {
     var token = header.split(' ')[1]

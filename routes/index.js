@@ -13,9 +13,10 @@ const ffmpeg = require('fluent-ffmpeg')
 function randomId () {
   return Math.random().toString(32).replace('0.', '').replace(',', '')
 }
+
 ffmpeg.setFfmpegPath(ffmpegInstaller.path)
 
-let array = []
+var array = []
 
 /* GET home page. */
 router.get('/diskinfo', function (req, res) {
@@ -35,17 +36,18 @@ router.post('/upload', function(req, res){
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '../uploads')
+  form.uploadDir = path.join(__dirname, '../Originals')
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
+     let duration = 0
      let fname = randomId ()
      let fnameWithExt = fname + '.' + file.name.split('.')[1]
 
-    fs.rename(file.path , path.join(form.uploadDir, fnameWithExt))
+    fs.renameSync(file.path , path.join(form.uploadDir, fnameWithExt))
     
-    console.log('File recieved:', file)
-   
+    // console.log('File recieved:', file)
+  
     // Call ffmpeg to take screenshots
     let thumb = ''
     var proc = new ffmpeg(path.join(form.uploadDir, fnameWithExt ))
@@ -57,12 +59,12 @@ router.post('/upload', function(req, res){
       {
         count: 1,
         filename: fname,
-        timemarks: [ '180' ] // number of seconds
+        timemarks: [15], // number of seconds
+        size: '1024x576' 
       }, 
-      path.join(form.uploadDir, `../uploads/thumbnails/`)  , function(err) {
+      path.join(form.uploadDir, `../Originals/thumbnails/`)  , function(err) {
         console.log('screenshots were saved', err)
       })
-    let duration = 0
     //Database logic
     array.push(
       {
@@ -82,7 +84,7 @@ router.post('/upload', function(req, res){
   let response = res
   // once all the files have been uploaded, send a response to the client
   form.on('end', () => {
-  	console.log(array)
+    console.log('Uploaded videos:', array)
     //Save array to local storage
     response.send(array)
     //End saving

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
-
+var history = require('connect-history-api-fallback')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -21,12 +21,13 @@ const BASE_URL = '/api'
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
 app.use(logger('dev'));
+app.use(history())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 //Serve thumbnails
-app.use('/i', express.static('uploads/thumbnails'));
+app.use('/i', express.static('Originals/thumbnails'));
 app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
@@ -36,6 +37,7 @@ app.use(BASE_URL + '/video', videos);
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE,OPTIONS,HEAD")
   next();
 });
 // catch 404 and forward to error handler

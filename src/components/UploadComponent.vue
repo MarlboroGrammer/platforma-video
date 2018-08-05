@@ -15,12 +15,13 @@
       </div>
     </div>
 
-    <input id="upload-input" type="file" name="uploads[]" multiple="multiple" v-on:change="uploadFiles"><br/>
+    <input id="upload-input" type="file" name="uploads[]" multiple="multiple" v-on:change="uploadFiles" accept=".mp4,.mkv"><br/>
   </div>
 </template>
 
 <script>
 import VideosService from '@/services/VideosService'
+import store from '@/store/store'
 
 export default {
   name: 'HelloWorld',
@@ -61,7 +62,8 @@ export default {
           contentType: false,
           success: function (data) {
             console.log('upload successful!\n' + data)
-            VideosService.addVideos(data, self.$store.getters.getToken).then(resp => {
+            VideosService.addVideos(data, store.getters.getToken).then(resp => {
+              console.log(resp)
               if (resp.data === 'success') {
                 self.loading = false
                 self.$router.push({name: 'AllComponent'})

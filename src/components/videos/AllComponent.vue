@@ -10,22 +10,31 @@
                   Link copied!
                 </div>
             </div>
+            <div v-if="deleteToggled">
+                <div class="alert alert-info" role="alert">
+                  Select video(s) to delete <button v-on:click="()=>{deleteToggled=false; emptyTBD()}" class="btn btn-primary">Cancel</button>
+                  <button v-if="this.toBeDeleted.length !== 0" class="btn btn-danger" @click="deleteVideos">Delete</button>
+                </div>
+            </div>
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-md-1"></div>
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="input-group">
                           <input type="text" class="form-control">
                           <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="btn-group">
                             <button id="list" class="btn btn-default btn-sm" v-on:click="listView">
                                 <span class="glyphicon glyphicon-th-list"></span>List
                             </button>
                             <button id="grid" class="btn btn-default btn-sm" v-on:click="gridView">
                                 <span class="glyphicon glyphicon-th"></span>Grid
+                            </button>
+                            <button id="grid" class="btn btn-default btn-sm" v-on:click="()=>deleteToggled=true">
+                                <span class="glyphicon glyphicon-trash"></span>Delete videos
                             </button>
                         </div>
                     </div>
@@ -44,7 +53,8 @@
                 <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
+                            <img class="group list-group-image"
+                            :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading">
@@ -56,29 +66,33 @@
                                     Yes <br><span v-if="video.hd_size"><strong>HD Size:</strong>  {{Math.floor(video.hd_size / 1024 / 1024)}} MBs</span>
                                     <span v-if="video.sd_size"><strong>SD Size:</strong>  {{Math.floor(video.sd_size / 1024 / 1024)}} MBs</span>
                                 </span>
-                                <span v-if="!video.encoded">No</span><br>
+                                <span v-if="!video.encoded">No</span><br/>
                                 <strong>HD Processed:</strong>
                                 <span v-if="video.hd_encode === 'y'">Yes</span>
                                 <span v-if="video.hd_encode === 'n'">No</span>
-                                <span v-if="video.hd_encode === 'p'">Pending</span><br>
+                                <span v-if="video.hd_encode === 'p'">Pending</span><br/>
                                 <strong>SD Processed:</strong>
                                 <span v-if="video.sd_encode === 'y'">Yes</span>
                                 <span v-if="video.sd_encode === 'n'">No</span>
-                                <span v-if="video.sd_encode === 'p'">Pending</span><br>
-                                <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs
+                                <span v-if="video.sd_encode === 'p'">Pending</span><br/>
+                                <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs <br/>
+                                <strong>Duration:</strong> {{video.duration / 60}} mins
                             </p>
-                            <div class="row">
+                            <div class="row" v-if="video.encoded">
                                 <div class="col-md-4">
-                                    <button class="btn btn-primary" v-on:click="getLink(video.link)">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy link
+                                    <button class="btn btn-primary" v-on:click="getLink(video.link, 'SD')">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy SD link
                                     </button>
                                 </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-danger" v-on:click="getLink(video.link)">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy link
+                                <div class="col-md-3" v-if="video.hd">
+                                    <button class="btn btn-danger" v-on:click="getLink(video.link, 'HD')">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy HD link
                                     </button>
                                 </div>
                             </div>
+                            <div class="row links-pad" v-if="!video.encoded">
+                            </div>
+                            <input type="checkbox" :value="video.id" v-if="deleteToggled" @change="showStuff($event)">
                         </div>
                     </div>
                 </div>
@@ -162,6 +176,12 @@
     {
         margin: 0 0 11px;
     }
+    .grid-group-item{
+        min-height: 495px;
+    }
+    .grid-group-item .links-pad{
+        padding: 8%;
+    }
 </style>
 
 <script>
@@ -173,10 +193,16 @@ export default {
     return {
       videos: [],
       loading: true,
-      alert: false
+      alert: false,
+      deleteToggled: false,
+      toBeDeleted: []
     }
   },
   methods: {
+    emptyTBD () {
+      this.toBeDeleted = []
+    },
+    isLoading (status) { this.loading = status },
     gridView () {
       console.log('Hey')
       $('#products .item').removeClass('list-group-item')
@@ -186,21 +212,45 @@ export default {
       $('#products .item').removeClass('grid-group-item')
       $('#products .item').addClass('list-group-item')
     },
-    getImgUrl (pic) {
-      return require(`../../../uploads/thumbnails/${pic}`) || ''
-    },
-    getLink (vidId) {
-      let vidLink = 'http://localhost:3000/api/video/' + vidId + '?q=480'
+    getLink (vidId, quality) {
+      let vidLink = `http://localhost:3000/api/video/${vidId}?q=${(quality === 'HD' ? '720' : '480')}`
       navigator.clipboard.writeText(vidLink)
       this.alert = true
       setTimeout(() => {
         this.alert = false
       }, 1000)
+    },
+    showStuff (ev) {
+      if (ev.target.checked) {
+        this.toBeDeleted.push(ev.target.value)
+      } else {
+        this.toBeDeleted.includes(ev.target.value) && this.toBeDeleted.splice(this.toBeDeleted.indexOf(ev.target.value), 1)
+      }
+      console.log(this.toBeDeleted)
+    },
+    deleteVideos () {
+      this.isLoading(true)
+      console.log('Token boi in deleteVideo:', this.$store.getters.getToken)
+      VideosService.deleteVideos(this.toBeDeleted, this.$store.getters.getToken).then(res => {
+        this.toBeDeleted.forEach(tbd => {
+          var found = this.videos.find((v) => v.id === parseInt(tbd))
+          if (found) {
+            console.log(`Found boi ${found} at ${this.videos.indexOf(found)}`)
+            this.videos.splice(this.videos.indexOf(found), 1)
+          }
+        })
+        this.isLoading(false)
+        this.deleteToggled = false
+        this.emptyTBD()
+      }).catch(err => {
+        this.isLoading(false)
+        alert('Could not delete, please try again later!', err)
+      })
     }
   },
   beforeRouteUpdate () {
     VideosService.getAll(this.$store.getters.getToken).then(vids => {
-      this.loading = false
+      this.isLoading(false)
       this.videos = vids.data
       this.videos = JSON.parse(this.videos)
     })
@@ -208,11 +258,11 @@ export default {
   mounted: function () {
     setTimeout(() => {
       VideosService.getAll(this.$store.getters.getToken).then(vids => {
-        this.loading = false
+        this.isLoading(false)
         this.videos = vids.data
         this.videos = JSON.parse(this.videos)
       })
-    }, 1000)
+    }, 600)
   }
 }
 </script>

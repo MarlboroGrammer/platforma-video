@@ -200,6 +200,7 @@ a.article, a.article:hover {
 
 <script>
 import LoginComponent from '@/components/LoginComponent'
+import store from '@/store/store'
 export default {
   name: 'App',
   components: {
@@ -213,10 +214,11 @@ export default {
   },
   data () {
     return {
-      loggedIn: this.$store.getters.isLoggedIn
+      loggedIn: this.$store.getters.isLoggedIn || false
     }
   },
   mounted: function () {
+    console.log('Login state!', store.getters.isLoggedIn)
     $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active')
     })
