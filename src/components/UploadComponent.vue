@@ -55,8 +55,11 @@ export default {
 
         let self = this
         $.ajax({
-          url: 'http://48gekijodouga.net:3000/api/upload',
+          url: 'http://localhost:3000/api/upload',
           type: 'POST',
+          beforeSend: function (request) {
+            request.setRequestHeader('Authorization', `JWT ${store.getters.getToken}`)
+          },
           data: formData,
           processData: false,
           contentType: false,

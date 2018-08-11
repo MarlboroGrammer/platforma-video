@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 router.post('/auth', function (req, res) {
   db.get().query('SELECT * FROM users WHERE email = ?', [req.body.email], function (err, rows) {
     if (err) 
-    	return done(err)
+    	return res.status(500).send(err)
     if(rows.length === 0) {
     	return res.status(404).send('nope')
     }

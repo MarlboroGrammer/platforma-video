@@ -20,7 +20,13 @@ rm -f $original
 
 killall ffmpeg
 
-rm -f "$encoded720"
-rm -f $encoded480
+if [-e $encoded720]
+then
+	rm -f "$encoded720"
+fi
+if [-e $encoded480]
+then
+	rm -f "$encoded480"
+fi
 
 rm -f $thumbnail
