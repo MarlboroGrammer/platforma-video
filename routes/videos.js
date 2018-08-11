@@ -31,12 +31,19 @@ router.post('/save', tokenMW.authenticate, function (req, res) {
 })
 
 router.delete('/delete', tokenMW.authenticate, function (req, res) {
-  let videoIds = Array.from(req.body)
-  console.log('Boiz about to be gone:', videoIds)
-  videoIds.forEach(id => {
-    db.get().query('DELETE FROM videos WHERE id = ?', [id], function (err, rows) {
-      if (err)
-        res.status(500).send (err)
+  let videoLink = Array.from(req.body)
+  console.log('Boiz about to be gone:', videoLink)
+  let error = false
+  videoLink.forEach(link => {
+    console.log(link)
+    db.get().query('DELETE FROM videos WHERE link = ?', [link], (err, rows) => {
+      if (err){
+        error = true
+        return
+      } else {
+        shelljs.exec('../Scripts/delete_video.sh ' + link)
+        
+      }
     })
   })
   res.send('success')
