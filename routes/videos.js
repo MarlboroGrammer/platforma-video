@@ -44,6 +44,7 @@ router.delete('/delete', tokenMW.authenticate, function (req, res) {
         return
       } else {
         shelljs.exec('../Scripts/delete_video.sh ' + link)
+        
       }
     })
   })
