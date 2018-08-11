@@ -2,7 +2,7 @@ var express = require('express')
 var db = require('../helper/db.js')
 var path = require('path')
 var tokenMW = require('./middleware/verifyToken.js')
-
+var shelljs = require('shelljs')
 var router = express.Router()
 
 router.get('/', tokenMW.authenticate, function (req, res) {
@@ -25,21 +25,32 @@ router.post('/save', tokenMW.authenticate, function (req, res) {
       console.log('Err is', err)
     	if (err) 
     	 res.status(500).send(err)
+
+
     })
   })
   res.send('success')
 })
 
 router.delete('/delete', tokenMW.authenticate, function (req, res) {
-  let videoIds = Array.from(req.body)
-  console.log('Boiz about to be gone:', videoIds)
-  videoIds.forEach(id => {
-    db.get().query('DELETE FROM videos WHERE id = ?', [id], function (err, rows) {
-      if (err)
-        res.status(500).send (err)
+  let videoLink = Array.from(req.body)
+  console.log('Boiz about to be gone:', videoLink)
+  let error = false
+  videoLink.forEach(link => {
+    console.log(link)
+    db.get().query('DELETE FROM videos WHERE link = ?', [link], (err, rows) => {
+      if (err){
+        error = true
+        return
+      } else {
+        shelljs.exec('../Scripts/delete_video.sh ' + link)
+      }
     })
   })
-  res.send('success')
+  if(error)
+    res.status(500).send(err)
+  else
+    res.send('success')
 })
 
 router.get('/:link', function (req, res) {

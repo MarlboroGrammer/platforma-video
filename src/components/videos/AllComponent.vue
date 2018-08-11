@@ -53,7 +53,7 @@
                 <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" :src="'http://48gekijodouga.net:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
+                            <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
@@ -81,7 +81,7 @@
                                 <input :id="video.link" :value="video.link" style="text-align:center;"><br/>
                                 <button class="btn btn-primary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>  <button class="btn btn-danger" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
                             </p>
-                            <input type="checkbox" :value="video.id" v-if="deleteToggled" @change="showStuff($event)">
+                            <input type="checkbox" :value="video.link" v-if="deleteToggled" @change="showStuff($event)">
                         </div>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ export default {
       console.log('Token boi in deleteVideo:', this.$store.getters.getToken)
       VideosService.deleteVideos(this.toBeDeleted, this.$store.getters.getToken).then(res => {
         this.toBeDeleted.forEach(tbd => {
-          var found = this.videos.find((v) => v.id === parseInt(tbd))
+          var found = this.videos.find((v) => v.link === tbd)
           if (found) {
             console.log(`Found boi ${found} at ${this.videos.indexOf(found)}`)
             this.videos.splice(this.videos.indexOf(found), 1)
@@ -251,7 +251,7 @@ export default {
         this.videos = vids.data
         this.videos = JSON.parse(this.videos)
       })
-    }, 600)
+    }, 700)
   }
 }
 </script>
