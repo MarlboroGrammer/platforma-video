@@ -9,7 +9,7 @@
             <div class="progress">
               <div class="progress-bar" role="progressbar"></div>
             </div>
-            <button class="btn btn-lg upload-btn" type="button" v-on:click="selectFiles">Upload File</button>
+            <button class="btn btn-lg upload-btn" type="button" v-on:click="selectFiles">Upload</button>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@ export default {
 
         let self = this
         $.ajax({
-          url: 'http://localhost:3000/api/upload',
+          url: 'http://48gekijodouga.net:3000/api/upload',
           type: 'POST',
           data: formData,
           processData: false,

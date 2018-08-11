@@ -8,25 +8,21 @@
         </div>
 
         <ul class="list-unstyled components">
-          <p>Hello, Admin</p>
+          <p><span class="glyphicon glyphicon-user"></span> Hello, Admin</p>
           <li class="active">
-            <router-link to="/">Home</router-link>
+            <router-link to="/"><span class="glyphicon glyphicon-home"></span> Home</router-link>
           </li>
           <li class="active">
-            <a href="#videoSubmenu" data-toggle="collapse" aria-expanded="false">Video</a>
+            <a href="#videoSubmenu" data-toggle="collapse" aria-expanded="false"><span class="glyphicon glyphicon-facetime-video"></span> Videos</a>
             <ul class="collapse list-unstyled" id="videoSubmenu">
               <li>
-                <router-link to="/video">All videos</router-link>
+                <router-link to="/video"><span class="glyphicon glyphicon-th-large"></span> All videos</router-link>
               </li>
-              <li><router-link to="/video/new">Add a new video</router-link></li>
-              <li><a href="#">Reports</a></li>
+              <li><router-link to="/video/new"><span class="glyphicon glyphicon-cloud-upload"></span> Add a new video</router-link></li>
             </ul>
           </li>
           <li>
-            <a href="#">Contact</a>
-          </li>
-          <li>
-            <a href="#" @click="logout">Logout</a>
+            <a href="#" @click="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ul>
       </nav>

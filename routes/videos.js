@@ -55,7 +55,7 @@ router.get('/:link', function (req, res) {
       break
   }
   console.log(fileToSend)
-  res.sendFile(path.join(__dirname, '../encoder/Encodes/' + fileToSend))
+  res.sendFile(path.join(__dirname, '../Encodes/' + fileToSend))
 //  res.sendFile(path.resolve('../encoder/Encodes/' + fileToSend))
 })
 module.exports = router

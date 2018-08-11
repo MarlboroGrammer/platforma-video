@@ -2,7 +2,7 @@
 <template>
     <div class="container">
         <div v-if="loading">
-            <img src="https://gifimage.net/wp-content/uploads/2017/09/ajax-loading-gif-transparent-background-4.gif" class="loading">
+            <img src="https://nsm09.casimages.com/img/2018/08/09//18080905543214575215842027.gif" class="loading">
         </div>
         <div v-if="!loading">
             <div v-if="alert">
@@ -53,45 +53,34 @@
                 <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image"
-                            :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
+                            <img class="group list-group-image" :src="'http://48gekijodouga.net:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" />
                         </div>
                         <div class="caption">
-                            <h4 class="group inner list-group-item-heading">
+                            <h4 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
                                 {{video.title}}
                             </h4>
                             <p class="group inner list-group-item-text">
                                 <strong>Encoded:</strong>
                                 <span v-if="video.encoded">
-                                    Yes <br><span v-if="video.hd_size"><strong>HD Size:</strong>  {{Math.floor(video.hd_size / 1024 / 1024)}} MBs</span>
-                                    <span v-if="video.sd_size"><strong>SD Size:</strong>  {{Math.floor(video.sd_size / 1024 / 1024)}} MBs</span>
+                                    <p class="glyphicon glyphicon-ok"></p>
                                 </span>
-                                <span v-if="!video.encoded">No</span><br/>
+                                <span v-if="!video.encoded">
+                                    <p class="glyphicon glyphicon-remove"></p>
+                                </span>
+                                <br/>
                                 <strong>HD Processed:</strong>
-                                <span v-if="video.hd_encode === 'y'">Yes</span>
+                                <span v-if="video.hd_encode === 'y'">Yes</span> <span v-if="video.encoded"><span v-if="video.hd_size">({{Math.floor(video.hd_size / 1024 / 1024)}} MBs)</span></span>
                                 <span v-if="video.hd_encode === 'n'">No</span>
-                                <span v-if="video.hd_encode === 'p'">Pending</span><br/>
+                                <span v-if="video.hd_encode === 'p'">Processing</span><br/>
                                 <strong>SD Processed:</strong>
-                                <span v-if="video.sd_encode === 'y'">Yes</span>
+                                <span v-if="video.sd_encode === 'y'">Yes</span> <span v-if="video.encoded">(<span v-if="video.sd_size">{{Math.floor(video.sd_size / 1024 / 1024)}} MBs</span>)</span>
                                 <span v-if="video.sd_encode === 'n'">No</span>
-                                <span v-if="video.sd_encode === 'p'">Pending</span><br/>
+                                <span v-if="video.sd_encode === 'p'">Processing</span><br/>
                                 <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs <br/>
-                                <strong>Duration:</strong> {{video.duration / 60}} mins
+                                <strong>Duration:</strong> {{Math.floor(video.duration / 60)}}:{{video.duration % 60}} <br/>
+                                <input :id="video.link" :value="video.link" style="text-align:center;"><br/>
+                                <button class="btn btn-primary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>  <button class="btn btn-danger" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
                             </p>
-                            <div class="row" v-if="video.encoded">
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary" v-on:click="getLink(video.link, 'SD')">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy SD link
-                                    </button>
-                                </div>
-                                <div class="col-md-3" v-if="video.hd">
-                                    <button class="btn btn-danger" v-on:click="getLink(video.link, 'HD')">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copy HD link
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row links-pad" v-if="!video.encoded">
-                            </div>
                             <input type="checkbox" :value="video.id" v-if="deleteToggled" @change="showStuff($event)">
                         </div>
                     </div>
@@ -121,7 +110,6 @@
     .thumbnail
     {
         margin-bottom: 20px;
-        padding: 0px;
         -webkit-border-radius: 0px;
         -moz-border-radius: 0px;
         border-radius: 0px;
@@ -212,9 +200,10 @@ export default {
       $('#products .item').removeClass('grid-group-item')
       $('#products .item').addClass('list-group-item')
     },
-    getLink (vidId, quality) {
-      let vidLink = `http://localhost:3000/api/video/${vidId}?q=${(quality === 'HD' ? '720' : '480')}`
-      navigator.clipboard.writeText(vidLink)
+    getRawLink (rawVideoLink) {
+      var rawVidLink = document.getElementById(rawVideoLink)
+      rawVidLink.select()
+      document.execCommand(`Copy`)
       this.alert = true
       setTimeout(() => {
         this.alert = false

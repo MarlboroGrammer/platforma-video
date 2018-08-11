@@ -10,7 +10,6 @@ var history = require('connect-history-api-fallback')
 var index = require('./routes/index');
 var users = require('./routes/users');
 var videos = require('./routes/videos');
-
 var app = express();
 
 // view engine setup

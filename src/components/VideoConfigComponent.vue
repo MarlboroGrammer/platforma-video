@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="loading">
-            <img src="https://gifimage.net/wp-content/uploads/2017/09/ajax-loading-gif-transparent-background-4.gif" class="loading">
+            <img src="https://nsm09.casimages.com/img/2018/08/09//18080905543214575215842027.gif" class="loading">
         </div>
     <div class="row" >
       <div v-if="noVideos()">
