@@ -1,7 +1,7 @@
 var mysql = require('mysql')
   , async = require('async')
 
-var PRODUCTION_DB = 'gekijodouga_platforma'
+var PRODUCTION_DB = 'gekijodo_platforma'
   , TEST_DB = 'platforma'
 
 exports.MODE_TEST = 'mode_test'
