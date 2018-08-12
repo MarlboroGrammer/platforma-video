@@ -55,7 +55,7 @@ export default {
 
         let self = this
         $.ajax({
-          url: 'http://48gekijodouga.net:3000/api/upload',
+          url: process.env.NODE_ENV === 'production' ? 'http://48gekijodouga.net:3000/api/upload' : 'http://localhost:3000/api/upload',
           type: 'POST',
           beforeSend: function (request) {
             request.setRequestHeader('Authorization', `JWT ${store.getters.getToken}`)

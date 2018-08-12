@@ -25,7 +25,7 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-db.connect(db.MODE_PRODUCTION, function(err) {
+db.connect((process.env.NODE_ENV === 'production' ? db.MODE_PRODUCTION : db.MODE_TEST), function(err) {
   if (err) {
     console.log('Unable to connect to MySQL.')
     process.exit(1)
