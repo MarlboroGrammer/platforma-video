@@ -53,8 +53,8 @@
                 <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" :src="'http://48gejikodouga:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="process.env.NODE_ENV === 'production'" />
-                            <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="process.env.NODE_ENV !== 'production'"/>
+                            <img class="group list-group-image" :src="'http://48gejikodouga:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="env === 'production'" />
+                            <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="env !== 'production'"/>
                         </div>
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
@@ -184,6 +184,7 @@ export default {
       loading: true,
       alert: false,
       deleteToggled: false,
+      env: process.env.NODE_ENV,
       toBeDeleted: []
     }
   },
