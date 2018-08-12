@@ -5,6 +5,7 @@ import VideoConfigComponent from '@/components/VideoConfigComponent'
 import DashboardHomeComponent from '@/components/DashboardHomeComponent'
 import AllComponent from '@/components/videos/AllComponent'
 import LoginComponent from '@/components/LoginComponent'
+import SingleVideoComponent from '@/components/videos/SingleVideoComponent'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/login',
       name: 'LoginComponent',
       component: LoginComponent
+    },
+    {
+      path: '/video/:id',
+      name: 'SingleVideoComponent',
+      component: SingleVideoComponent
     }
   ]
 })

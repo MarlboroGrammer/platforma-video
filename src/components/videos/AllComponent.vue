@@ -53,7 +53,7 @@
                 <div class="item  ol-xs-4 col-lg-4 grid-group-item" v-for="video in videos" :key="video.id">
                     <div class="thumbnail">
                         <div v-if="video.thumbnail">
-                            <img class="group list-group-image" :src="'http://48gekijodouga:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="env === 'production'" />
+                            <img class="group list-group-image" :src="'http://48gekijodouga.net:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="env === 'production'" />
                             <img class="group list-group-image" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="350" v-if="env !== 'production'"/>
                         </div>
                         <div class="caption">

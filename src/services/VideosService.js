@@ -15,5 +15,9 @@ export default {
     console.log('Token boi in service:', token)
     let config = { data: idsArray, headers: { 'Authorization': 'JWT ' + token } }
     return Api().delete(`${PREFIX}/delete`, config)
+  },
+  getLinks (link, token) {
+    let config = { headers: { 'Authorization': 'JWT ' + token } }
+    return Api().get(`${PREFIX}/${link}`, config)
   }
 }

@@ -51,20 +51,15 @@ router.delete('/delete', tokenMW.authenticate, function (req, res) {
     res.send('success')
 })
 
-router.get('/:link', function (req, res) {
-  let quality = parseInt(req.query.q)
-  let link = req.params.link
-  let fileToSend = link
-  switch (quality) {
-    case 480:
-      fileToSend = link + '_h264_480.mp4'
-      break
-    case 720:
-      fileToSend = link + '_h264_720.mp4'
-      break
-  }
-  console.log(fileToSend)
-  res.sendFile(path.join(__dirname, '../Encodes/' + fileToSend))
+router.get('/:link', tokenMW.authenticate, function (req, res) {
+  console.log(req.params.link)
+  db.get().query('SELECT hd_encode, sd_encode, hd, path, CONCAT(path, thumbnail) AS thumbnail_path FROM videos WHERE link = ?', [req.params.link], (err, rows) => {
+    if (err){
+      res.status(500).send(err)
+    } else {
+      res.json(JSON.stringify(rows))
+    }
+  })
 //  res.sendFile(path.resolve('../encoder/Encodes/' + fileToSend))
 })
 module.exports = router
