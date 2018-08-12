@@ -29,7 +29,7 @@ router.get('/diskinfo', function (req, res) {
 router.get('/configure', function (req, res) {
   res.render('config')
 })
-router.post('/upload', tokenMW.authenticate, function(req, res){
+router.post('/upload', function(req, res){
   // create an incoming form object
   var form = new formidable.IncomingForm()
   //Specify maximum file size, in this case we need 15GB

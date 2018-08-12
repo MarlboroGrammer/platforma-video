@@ -25,8 +25,6 @@ router.post('/save', tokenMW.authenticate, function (req, res) {
       console.log('Err is', err)
     	if (err) 
     	 res.status(500).send(err)
-
-
     })
   })
   res.send('success')
