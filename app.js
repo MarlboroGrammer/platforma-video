@@ -11,7 +11,6 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var videos = require('./routes/videos');
 var app = express();
-
 // view engine setup
 app.set('view engine', 'html');
 
@@ -20,13 +19,15 @@ const BASE_URL = '/api'
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
 app.use(logger('dev'));
-app.use(history())
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true, limit:'10gb' }));
+app.use(history())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 //Serve thumbnails
 app.use('/i', express.static('Originals/thumbnails'));
+app.use('/o', express.static('Originals'));
+app.use('/e', express.static('Encodes'));
 app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
@@ -58,3 +59,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

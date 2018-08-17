@@ -327,3 +327,159 @@
 [2018-08-11 01:33:02] [DATABASE] [42] Database SD only done updated
 [2018-08-11 01:33:02] [EVENT] [42] Encode ended.
 ------------------------------------------
+[2018-08-14 16:09:01] [DATABASE] [73] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:09:01] [EVENT] [73] Encode started...
+[2018-08-14 16:09:03] [EVENT] [73] Resolution extracted
+[2018-08-14 16:09:04] [EVENT] [73] Duration extracted
+[2018-08-14 16:09:04] [DATABASE] [73] Database Duration updated
+[2018-08-14 16:09:04] [EVENT] [73] SD only encoding started
+[2018-08-14 16:09:04] [DATABASE] [73] Database SD only processing updated
+[2018-08-14 16:09:04] [EVENT] [73] Scanning for h264 480p...
+[2018-08-14 16:09:04] [EVENT] [73] No encoding needed for h264 480p.
+[2018-08-14 16:09:04] [EVENT] [73] Encoding for h264 480p Ended.
+[2018-08-14 16:09:04] [DATABASE] [73] Database SD set to done.
+[2018-08-14 16:09:04] [EVENT] [73] SD only encoding done
+[2018-08-14 16:09:04] [DATABASE] [73] Database SD only done updated
+[2018-08-14 16:09:04] [EVENT] [73] Encode ended.
+------------------------------------------
+[2018-08-14 16:33:01] [DATABASE] [74] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:33:01] [EVENT] [74] Encode started...
+[2018-08-14 16:33:01] [EVENT] [74] Resolution extracted
+[2018-08-14 16:33:01] [EVENT] [74] Duration extracted
+[2018-08-14 16:33:01] [DATABASE] [74] Database Duration updated
+[2018-08-14 16:33:01] [EVENT] [74] HD and SD encoding started
+[2018-08-14 16:33:01] [DATABASE] [74] Database HD and SD processing updated
+[2018-08-14 16:33:01] [EVENT] [74] Scanning for h264 720p...
+[2018-08-14 16:33:01] [EVENT] [74] Encoding for h264 720p started...
+[2018-08-14 16:33:58] [EVENT] [74] Encoding for h264 720p Ended.
+[2018-08-14 16:33:58] [DATABASE] [74] Database HD set to done.
+[2018-08-14 16:33:58] [EVENT] [74] Scanning for h264 480p...
+[2018-08-14 16:33:58] [EVENT] [74] Encoding for h264 480p started...
+[2018-08-14 16:34:23] [EVENT] [74] Encoding for h264 480p Ended.
+[2018-08-14 16:34:23] [DATABASE] [74] Database SD set to done.
+[2018-08-14 16:34:23] [EVENT] [74] HD and SD encoding done
+[2018-08-14 16:34:23] [DATABASE] [74] Database HD and SD done updated
+[2018-08-14 16:34:23] [EVENT] [74] Encode ended.
+------------------------------------------
+[2018-08-14 16:40:01] [DATABASE] [75] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:40:01] [EVENT] [75] Encode started...
+[2018-08-14 16:40:01] [EVENT] [75] Resolution extracted
+[2018-08-14 16:40:02] [EVENT] [75] Duration extracted
+[2018-08-14 16:40:02] [DATABASE] [75] Database Duration updated
+[2018-08-14 16:40:02] [EVENT] [75] SD only encoding started
+[2018-08-14 16:40:02] [DATABASE] [75] Database SD only processing updated
+[2018-08-14 16:40:02] [EVENT] [75] Scanning for h264 480p...
+[2018-08-14 16:40:02] [EVENT] [75] Encoding for h264 480p started...
+[2018-08-14 16:40:56] [EVENT] [75] Encoding for h264 480p Ended.
+[2018-08-14 16:40:57] [DATABASE] [75] Database SD set to done.
+[2018-08-14 16:40:57] [EVENT] [75] SD only encoding done
+[2018-08-14 16:40:57] [DATABASE] [75] Database SD only done updated
+[2018-08-14 16:40:57] [EVENT] [75] Encode ended.
+------------------------------------------
+[2018-08-14 16:49:01] [DATABASE] [76] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:49:01] [EVENT] [76] Encode started...
+[2018-08-14 16:49:01] [EVENT] [76] Resolution extracted
+[2018-08-14 16:49:01] [EVENT] [76] Duration extracted
+[2018-08-14 16:49:01] [DATABASE] [76] Database Duration updated
+[2018-08-14 16:49:01] [EVENT] [76] HD and SD encoding started
+[2018-08-14 16:49:01] [DATABASE] [76] Database HD and SD processing updated
+[2018-08-14 16:49:01] [EVENT] [76] Scanning for h264 720p...
+[2018-08-14 16:49:01] [EVENT] [76] No encoding needed for h264 720p.
+[2018-08-14 16:49:01] [EVENT] [76] Encoding for h264 720p Ended.
+[2018-08-14 16:49:01] [DATABASE] [76] Database HD set to done.
+[2018-08-14 16:49:01] [EVENT] [76] Scanning for h264 480p...
+[2018-08-14 16:49:01] [EVENT] [76] Encoding for h264 480p started...
+[2018-08-14 16:50:21] [EVENT] [76] Encoding for h264 480p Ended.
+[2018-08-14 16:50:21] [DATABASE] [76] Database SD set to done.
+[2018-08-14 16:50:22] [EVENT] [76] HD and SD encoding done
+[2018-08-14 16:50:22] [DATABASE] [76] Database HD and SD done updated
+[2018-08-14 16:50:22] [EVENT] [76] Encode ended.
+------------------------------------------
+[2018-08-14 16:51:01] [DATABASE] [77] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:51:01] [EVENT] [77] Encode started...
+[2018-08-14 16:51:01] [EVENT] [77] Resolution extracted
+[2018-08-14 16:51:01] [EVENT] [77] Duration extracted
+[2018-08-14 16:51:01] [DATABASE] [77] Database Duration updated
+[2018-08-14 16:51:01] [EVENT] [77] SD only encoding started
+[2018-08-14 16:51:01] [DATABASE] [77] Database SD only processing updated
+[2018-08-14 16:51:01] [EVENT] [77] Scanning for h264 480p...
+[2018-08-14 16:51:02] [EVENT] [77] Encoding for h264 480p started...
+[2018-08-14 16:52:10] [EVENT] [77] Encoding for h264 480p Ended.
+[2018-08-14 16:52:10] [DATABASE] [77] Database SD set to done.
+[2018-08-14 16:52:10] [EVENT] [77] SD only encoding done
+[2018-08-14 16:52:10] [DATABASE] [77] Database SD only done updated
+[2018-08-14 16:52:10] [EVENT] [77] Encode ended.
+------------------------------------------
+[2018-08-14 16:53:01] [DATABASE] [78] Video data fetched
+
+------------------------------------------
+[2018-08-14 16:53:01] [EVENT] [78] Encode started...
+[2018-08-14 16:53:01] [EVENT] [78] Resolution extracted
+[2018-08-14 16:53:01] [EVENT] [78] Duration extracted
+[2018-08-14 16:53:01] [DATABASE] [78] Database Duration updated
+[2018-08-14 16:53:01] [EVENT] [78] HD and SD encoding started
+[2018-08-14 16:53:01] [DATABASE] [78] Database HD and SD processing updated
+[2018-08-14 16:53:01] [EVENT] [78] Scanning for h264 720p...
+[2018-08-14 16:53:01] [EVENT] [78] No encoding needed for h264 720p.
+[2018-08-14 16:53:01] [EVENT] [78] Encoding for h264 720p Ended.
+[2018-08-14 16:53:01] [DATABASE] [78] Database HD set to done.
+[2018-08-14 16:53:01] [EVENT] [78] Scanning for h264 480p...
+[2018-08-14 16:53:02] [EVENT] [78] Encoding for h264 480p started...
+[2018-08-14 16:55:05] [EVENT] [78] Encoding for h264 480p Ended.
+[2018-08-14 16:55:05] [DATABASE] [78] Database SD set to done.
+[2018-08-14 16:55:05] [EVENT] [78] HD and SD encoding done
+[2018-08-14 16:55:05] [DATABASE] [78] Database HD and SD done updated
+[2018-08-14 16:55:05] [EVENT] [78] Encode ended.
+------------------------------------------
+[2018-08-15 17:18:02] [DATABASE] [79] Video data fetched
+
+------------------------------------------
+[2018-08-15 17:18:02] [EVENT] [79] Encode started...
+[2018-08-15 17:18:05] [EVENT] [79] Resolution extracted
+[2018-08-15 17:18:06] [EVENT] [79] Duration extracted
+[2018-08-15 17:18:06] [DATABASE] [79] Database Duration updated
+[2018-08-15 17:18:06] [EVENT] [79] HD and SD encoding started
+[2018-08-15 17:18:06] [DATABASE] [79] Database HD and SD processing updated
+[2018-08-15 17:18:06] [EVENT] [79] Scanning for h264 720p...
+[2018-08-15 17:18:06] [EVENT] [79] Encoding for h264 720p started...
+[2018-08-15 17:38:06] [EVENT] [79] Encoding for h264 720p Ended.
+[2018-08-15 17:38:06] [DATABASE] [79] Database HD set to done.
+[2018-08-15 17:38:06] [EVENT] [79] Scanning for h264 480p...
+[2018-08-15 17:38:06] [EVENT] [79] Encoding for h264 480p started...
+[2018-08-15 17:46:42] [EVENT] [79] Encoding for h264 480p Ended.
+[2018-08-15 17:46:42] [DATABASE] [79] Database SD set to done.
+[2018-08-15 17:46:42] [EVENT] [79] HD and SD encoding done
+[2018-08-15 17:46:42] [DATABASE] [79] Database HD and SD done updated
+[2018-08-15 17:46:42] [EVENT] [79] Encode ended.
+------------------------------------------
+[2018-08-17 23:45:01] [DATABASE] [80] Video data fetched
+
+------------------------------------------
+[2018-08-17 23:45:01] [EVENT] [80] Encode started...
+[2018-08-17 23:45:01] [EVENT] [80] Resolution extracted
+[2018-08-17 23:45:01] [EVENT] [80] Duration extracted
+[2018-08-17 23:45:01] [DATABASE] [80] Database Duration updated
+[2018-08-17 23:45:01] [EVENT] [80] HD and SD encoding started
+[2018-08-17 23:45:01] [DATABASE] [80] Database HD and SD processing updated
+[2018-08-17 23:45:01] [EVENT] [80] Scanning for h264 720p...
+[2018-08-17 23:45:02] [EVENT] [80] Encoding for h264 720p started...
+[2018-08-17 23:46:14] [EVENT] [80] Encoding for h264 720p Ended.
+[2018-08-17 23:46:14] [DATABASE] [80] Database HD set to done.
+[2018-08-17 23:46:14] [EVENT] [80] Scanning for h264 480p...
+[2018-08-17 23:46:14] [EVENT] [80] Encoding for h264 480p started...
+[2018-08-17 23:46:46] [EVENT] [80] Encoding for h264 480p Ended.
+[2018-08-17 23:46:46] [DATABASE] [80] Database SD set to done.
+[2018-08-17 23:46:46] [EVENT] [80] HD and SD encoding done
+[2018-08-17 23:46:46] [DATABASE] [80] Database HD and SD done updated
+[2018-08-17 23:46:46] [EVENT] [80] Encode ended.
+------------------------------------------

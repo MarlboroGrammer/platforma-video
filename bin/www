@@ -5,10 +5,10 @@
  */
 
 var debug = require('debug')('server:server');
-var http = require('http');
+var https = require('http');
 var app = require('../app');
 var db = require('../helper/db.js')
-
+var fs = require('fs')
 /**
  * Get port from environment and store in Express.
  */
@@ -19,18 +19,22 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
+/*
+const options = {
+  key: fs.readFileSync("/etc/letsencrypt/live/48gekijodouga.net/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/48gekijodouga.net/fullchain.pem")
+};*/
+var server = https.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-db.connect((process.env.NODE_ENV === 'production' ? db.MODE_PRODUCTION : db.MODE_TEST), function(err) {
+db.connect((db.MODE_PRODUCTION), function(err) {
   if (err) {
     console.log('Unable to connect to MySQL.')
     process.exit(1)
   } else {
-    console.log('DB Connected')
+    console.log('DB Connected', port)
     server.listen(port)
     server.on('error', onError)
     server.on('listening', onListening)

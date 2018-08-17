@@ -54,14 +54,10 @@ export default {
         }
 
         let self = this
-        let url = process.env.NODE_ENV === 'production' ? 'http://48gekijodouga.net:3000/api/upload' : 'http://localhost:3000/api/upload'
+        let url = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/api/upload' : 'http://localhost:3000/api/upload'
         $.ajax({
           url: url,
           type: 'POST',
-          beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', `JWT ${store.getters.getToken}`)
-            xhr.setRequestHeader('Gay header', 'Gay token test')
-          },
           data: formData,
           processData: false,
           contentType: false,
