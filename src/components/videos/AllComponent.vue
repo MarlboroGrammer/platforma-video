@@ -125,7 +125,7 @@
     }
     .input-group-addon{
       padding-right: 25px;
-      background-color: rgb(39, 36, 36);
+      background-color: rgb(39, 36, 37);
     }
     .glyphicon { margin-right:5px; }
     ul.paginate-links{
