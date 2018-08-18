@@ -46,7 +46,7 @@
                 <paginate ref="paginator"
                   name="videos"
                   :list="videos"
-                  :per="6"
+                  :per="12"
                   :pageCount="videos.length"
                 >
                   <div class="padded-box row">
