@@ -36,12 +36,23 @@
   height: 50px;
   line-height: 50px;
 }
-.main-div {
+@media screen and (min-width: 800px) {
+  .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
   margin: 10px auto 30px;
   max-width: 38%;
   padding: 50px 70px 70px 71px;
+}
+}
+@media screen and (max-width: 415px) {
+  .main-div {
+    background: #ffffff none repeat scroll 0 0;
+    border-radius: 2px;
+    margin: 10px auto 30px;
+    width: inherit;
+    padding: 50px 70px 70px 71px;
+  }
 }
 
 .login-form .form-group {
