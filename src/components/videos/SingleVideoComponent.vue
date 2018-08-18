@@ -21,27 +21,28 @@ export default {
   methods: {
   },
   mounted: function () {
+    let prefix = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/' : 'http://localhost:3000/'
     VideosService.getLinks(this.$route.params.id, this.$store.getters.getToken).then(res => {
       let vid = JSON.parse(res.data)[0]
       if (vid.hd) {
         if ((vid.hd_encode !== 'y') && (vid.sd_encode !== 'y')) {
-          this.links.push(`https://48gekijodouga.net/o/${this.id}.mp4`)
+          this.links.push(`${prefix}/o/${this.id}.mp4`)
         }
         else if ((vid.hd_encode === 'y') && (vid.sd_encode !== 'y')) {
-          this.links.push(`https://48gekijodouga.net/e/${this.id}_h264_720.mp4`)
+          this.links.push(`${prefix}/e/${this.id}_h264_720.mp4`)
         }
         else if ((vid.hd_encode === 'y') && (vid.sd_encode === 'y')) {
-          this.links.push(`https://48gekijodouga.net/e/${this.id}_h264_720.mp4`)
-          this.links.push(`https://48gekijodouga.net/e/${this.id}_h264_480.mp4`)
+          this.links.push(`${prefix}/e/${this.id}_h264_720.mp4`)
+          this.links.push(`${prefix}/e/${this.id}_h264_480.mp4`)
         }
       }
       else{
         if ((vid.sd_encode !== 'y')) {
-          this.links.push(`https://48gekijodouga.net/o/${this.id}.mp4`)
+          this.links.push(`${prefix}/o/${this.id}.mp4`)
         }
 
         if ((vid.sd_encode === 'y')) {
-          this.links.push(`https://48gekijodouga.net/e/${this.id}_h264_480.mp4`)
+          this.links.push(`${prefix}/e/${this.id}_h264_480.mp4`)
         }
       }
     })
