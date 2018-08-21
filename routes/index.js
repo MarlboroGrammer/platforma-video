@@ -29,6 +29,29 @@ router.get('/diskinfo', function (req, res) {
 router.get('/configure', function (req, res) {
   res.render('config')
 })
+
+router.post('/thumb', function (req, res) {
+
+  console.log('Boi called')
+  // create an incoming form object
+  var form = new formidable.IncomingForm()
+  //Specify maximum file size, in this case we need 15GB
+  form.maxFileSize = 15000 * 1024 * 1024;
+  // store all uploads in the /uploads directory
+  form.uploadDir = path.join(__dirname, '../Originals/thumbnails')
+  form.on('file', function(field, file) {
+    fs.renameSync(file.path , path.join(form.uploadDir, file.name))
+  })
+  form.on('error', function(err) {
+    res.status(500).send(err)
+  })
+  form.on('end', () => {
+    res.status(200).send('success')
+  })
+
+  form.parse(req)
+})
+
 router.post('/upload', function(req, res){
   // create an incoming form object
   var form = new formidable.IncomingForm()

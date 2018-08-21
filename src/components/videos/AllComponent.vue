@@ -55,8 +55,8 @@
                   <div class="padded-box row">
                     <div class="col-md-4" v-for="(video) in paginated('videos')" :key="video.id">
                       <div class="card text-center">
-                        <img class="card-img-top" :src="'https://48gekijodouga.net/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env === 'production'" />
-                        <img class="card-img-top" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env !== 'production'"/>
+                        <img class="card-img-top" :src="'https://48gekijodouga.net/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
+                        <img class="card-img-top" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
                         <div class="card-body">
                         <div class="card-text">
                             <h5 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
@@ -70,7 +70,8 @@
                                 <p class="glyphicon glyphicon-remove"></p>
                             </span>
                             <br/><strong>HD Processed:</strong>
-                            <span v-if="video.hd_encode === 'y'">Yes</span> <span v-if="video.encoded"><span v-if="video.hd_size">({{Math.floor(video.hd_size / 1024 / 1024)}} MBs)</span></span>
+                            <span v-if="video.hd_encode === 'y'">Yes</span>
+                            <span v-if="video.encoded"><span v-if="video.hd_size">({{Math.floor(video.hd_size / 1024 / 1024)}} MBs)</span></span>
                             <span v-if="video.hd_encode === 'n'">No</span>
                             <span v-if="video.hd_encode === 'p'">Processing</span><br/>
                             <strong>SD Processed:</strong>
@@ -80,7 +81,9 @@
                             <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs <br/>
                             <strong>Duration:</strong> {{Math.floor(video.duration / 60)}}:{{video.duration % 60}} <br/>
                             <input :id="video.link" :value="video.link" style="text-align:center;"><br/>
-                            <button class="btn btn-secondary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>  <button class="btn btn-danger" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
+                            <button class="btn btn-secondary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>
+                            <input type="file" hidden :id="'file_' + video.link" @change="onImageChange" accept=".png">
+                            <button class="btn btn-danger" v-on:click="changeImg(video.link)" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
                             <br/>
                             <label v-if="deleteToggled" class="checkboxcontainer">
                             <input type="checkbox" :value="video.link" @change="showStuff($event)"><br/>
@@ -170,68 +173,68 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
-.checkboxcontainer {
-    display: block;
-    cursor: pointer;
-    font-size: 30px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    margin-bottom: -70px;
-}
+    .checkboxcontainer {
+        display: block;
+        cursor: pointer;
+        font-size: 30px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-bottom: -70px;
+    }
 
-/* Hide the browser's default checkbox */
-.checkboxcontainer input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
+    /* Hide the browser's default checkbox */
+    .checkboxcontainer input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
 
-/* Create a custom checkbox */
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-}
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
 
-/* On mouse-over, add a grey background color */
-.checkboxcontainer:hover input ~ .checkmark {
-    background-color: #ccc;
-}
+    /* On mouse-over, add a grey background color */
+    .checkboxcontainer:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
 
-/* When the checkbox is checked, add a blue background */
-.checkboxcontainer input:checked ~ .checkmark {
-    background-color: #427aa1;
-}
+    /* When the checkbox is checked, add a blue background */
+    .checkboxcontainer input:checked ~ .checkmark {
+        background-color: #427aa1;
+    }
 
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
 
-/* Show the checkmark when checked */
-.checkboxcontainer input:checked ~ .checkmark:after {
-    display: block;
-}
+    /* Show the checkmark when checked */
+    .checkboxcontainer input:checked ~ .checkmark:after {
+        display: block;
+    }
 
-/* Style the checkmark/indicator */
-.checkboxcontainer .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
+    /* Style the checkmark/indicator */
+    .checkboxcontainer .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
 </style>
 
 <script>
@@ -251,18 +254,37 @@ export default {
     }
   },
   methods: {
+    isLoading (status) { this.loading = status },
+    changeImg (link) {
+      $(`#file_${link}`).click()
+    },
+    onImageChange (e) {
+      const imgId = '#img_' + e.target.id.split('_')[1]
+      const file = e.target.files[0]
+      // create a FormData object which will be sent as the data payload in the
+      // AJAX request
+      var formData = new FormData()
+      const uploadName = e.target.id.split('_')[1] + '.' + file.name.split('.')[1]
+      formData.append('uploads[]', file, uploadName)
+      console.log(formData)
+      let url = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/api/thumb' : 'http://localhost:3000/api/thumb'
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          console.log('upload successful!\n' + data)
+          $(imgId).attr('src', URL.createObjectURL(file))
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      })
+    },
     emptyTBD () {
       this.toBeDeleted = []
-    },
-    isLoading (status) { this.loading = status },
-    gridView () {
-      console.log('Hey')
-      $('#products .item').removeClass('list-group-item')
-      $('#products .item').addClass('grid-group-item')
-    },
-    listView () {
-      $('#products .item').removeClass('grid-group-item')
-      $('#products .item').addClass('list-group-item')
     },
     getRawLink (rawVideoLink) {
       var rawVidLink = document.getElementById(rawVideoLink)
@@ -315,7 +337,7 @@ export default {
         this.videos = vids.data
         this.videos = JSON.parse(this.videos)
       })
-    }, 700)
+    }, 1000)
   }
 }
 </script>
