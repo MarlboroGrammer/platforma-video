@@ -21,7 +21,7 @@ export default {
   methods: {
   },
   mounted: function () {
-    let prefix = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/' : 'http://localhost:3000/'
+    let prefix = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net' : 'http://localhost:3000'
     VideosService.getLinks(this.$route.params.id, this.$store.getters.getToken).then(res => {
       let vid = JSON.parse(res.data)[0]
       if (vid.hd) {
