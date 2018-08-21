@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div v-if="loading">
-            <img src="https://nsm09.casimages.com/img/2018/08/09//18080905543214575215842027.gif" class="loading">
+        <div v-if="loading" class="loading">
+            <img src="https://nsm09.casimages.com/img/2018/08/19//18081902023414575215853601.gif" width="200px">
         </div>
         <div v-if="!loading">
             <div v-if="alert">
@@ -11,10 +11,11 @@
             </div>
             <div v-if="deleteToggled">
                 <div class="alert alert-info" role="alert">
-                  Select video(s) to delete <button v-on:click="()=>{deleteToggled=false; emptyTBD()}" class="btn btn-primary">Cancel</button>
+                  Select video(s) to delete <button v-on:click="()=>{deleteToggled=false; emptyTBD()}" class="btn btn-secondary">Cancel</button>
                   <button v-if="this.toBeDeleted.length !== 0" class="btn btn-danger" @click="deleteVideos">Delete</button>
                 </div>
             </div>
+            <div id="products" class="row list-group">
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-lg-9 col-sm-5 col-xs-5">
@@ -25,14 +26,16 @@
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3">
                         <div class="btn-group">
-                            <button id="grid" class="btn btn-default btn-sm" v-on:click="()=>deleteToggled=true">
+                            <button id="grid" class="btn btn-secondary btn-sm">
+                                <span class="glyphicon glyphicon-search"></span>Search
+                            </button>&nbsp;&nbsp;
+                            <button id="grid" class="btn btn-danger btn-sm" v-on:click="()=>deleteToggled=true">
                                 <span class="glyphicon glyphicon-trash"></span>Delete videos
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="products" class="row list-group">
                 <div v-if="videos.length == 0" class="no-vid-container">
                     <h1 class="novid">No videos uploaded.</h1>
                     <router-link to="/video/new">
@@ -46,7 +49,7 @@
                 <paginate ref="paginator"
                   name="videos"
                   :list="videos"
-                  :per="6"
+                  :per="12"
                   :pageCount="videos.length"
                 >
                   <div class="padded-box row">
@@ -55,7 +58,7 @@
                         <img class="card-img-top" :src="'https://48gekijodouga.net/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env === 'production'" />
                         <img class="card-img-top" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env !== 'production'"/>
                         <div class="card-body">
-                          <p class="card-text">
+                        <div class="card-text">
                             <h5 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
                             {{video.title}}
                             </h5>
@@ -66,7 +69,7 @@
                             <span v-if="!video.encoded">
                                 <p class="glyphicon glyphicon-remove"></p>
                             </span>
-                            <strong>HD Processed:</strong>
+                            <br/><strong>HD Processed:</strong>
                             <span v-if="video.hd_encode === 'y'">Yes</span> <span v-if="video.encoded"><span v-if="video.hd_size">({{Math.floor(video.hd_size / 1024 / 1024)}} MBs)</span></span>
                             <span v-if="video.hd_encode === 'n'">No</span>
                             <span v-if="video.hd_encode === 'p'">Processing</span><br/>
@@ -77,12 +80,16 @@
                             <strong>Original size:</strong> {{Math.floor(video.original_size / 1024 / 1024) }} MBs <br/>
                             <strong>Duration:</strong> {{Math.floor(video.duration / 60)}}:{{video.duration % 60}} <br/>
                             <input :id="video.link" :value="video.link" style="text-align:center;"><br/>
-                            <button class="btn btn-primary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>  <button class="btn btn-danger" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
+                            <button class="btn btn-secondary" v-on:click="getRawLink(video.link)" style="margin-top:5px;"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Link</button>  <button class="btn btn-danger" style="margin-top:5px;"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Thumbnail</button>
                             <br/>
-                          </p>
+                            <label v-if="deleteToggled" class="checkboxcontainer">
+                            <input type="checkbox" :value="video.link" @change="showStuff($event)"><br/>
+                            <span class="checkmark"></span>
+                            </label>
+                        </div>
                         </div>
                       </div>
-                      <input type="checkbox" :value="video.link" v-if="deleteToggled" @change="showStuff($event)">
+                      <br/>
                     </div>
                   </div>
                 </paginate>
@@ -101,23 +108,23 @@
         margin-top: 15px;
         color: #68757E;
         font-size: 6em;
-        font-family: 'Poppins', sans-serif;
     }
     .loading{
         position: relative;
-        top: 55%;
-        left: 35%;
-        padding-bottom: 110px;
+        text-align: center;
     }
 
     @media (max-width: 376px) {
       .loading{
         position: relative;
-        padding-bottom: 110px;
+        text-align: center;
       }
     }
     .well {
       background-color: #333131;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
     .video-search, .video-search:focus{
       background-color: #333;
@@ -128,34 +135,103 @@
       background-color: rgb(39, 36, 36);
     }
     .glyphicon { margin-right:5px; }
+    ul { -webkit-padding-start: 0px;}
     ul.paginate-links{
-      font-family: CamptonBold;
-      font-size: 18px;
       display: inline-flex;
       list-style: none;
       cursor: pointer;
     }
     ul.paginate-links li{
-      font-family: CamptonBold;
-      font-size: 18px;
-      text-align: center;
-      display: inline;
-      margin: 10px;
-      padding: 5px;
       padding-right: 15px;
       padding-left: 15px;
-      border: 2px solid rgb(115, 134, 213);
-      border-radius: 15%;
+      background-color: #2f2f2f;
+      color: #4988b3;
     }
     ul.paginate-links li.active{
-      background-color: rgb(115, 134, 213);
+      background-color: #3b6c8f;
     }
     ul.paginate-links li.active a{
-      color: white;
+      color: #fff;
+      background-color: #427aa1;
+      border-color: #427aa1;
     }
     ul.paginate-links li.right-arrow, ul.paginate-links li.left-arrow{
       border: none;
     }
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+.checkboxcontainer {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: -70px;
+}
+
+/* Hide the browser's default checkbox */
+.checkboxcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxcontainer:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkboxcontainer input:checked ~ .checkmark {
+    background-color: #427aa1;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkboxcontainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkboxcontainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
 </style>
 
 <script>
