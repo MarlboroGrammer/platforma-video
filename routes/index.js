@@ -40,7 +40,7 @@ router.post('/thumb', function (req, res) {
   // store all uploads in the /uploads directory
   form.uploadDir = path.join(__dirname, '../Originals/thumbnails')
   form.on('file', function(field, file) {
-    fs.renameSync(file.path , path.join(form.uploadDir, file.name))
+    fs.renameSync(file.path , path.join(form.uploadDir, file.name)) 
   })
   form.on('error', function(err) {
     res.status(500).send(err)
