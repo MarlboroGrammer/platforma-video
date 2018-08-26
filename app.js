@@ -21,17 +21,24 @@ app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true, limit:'10gb' }));
-app.use(history())
+// app.use(history())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 //Serve thumbnails
-app.use('/i', express.static('Originals/thumbnails'));
+// app.use('/i', express.static('Originals/thumbnails'));
 app.use('/o', express.static('Originals'));
 app.use('/e', express.static('Encodes'));
 app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
 
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 //Manually enable cors
 app.use(function(req, res, next) {

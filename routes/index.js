@@ -7,6 +7,7 @@ var fs = require('fs')
 var os = require('os')
 var tokenMW = require('./middleware/verifyToken.js')
 var diskspace = require('diskspace')
+var im = require('imagemagick')
 
 const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg')
 const ffmpeg = require('fluent-ffmpeg')
@@ -26,8 +27,8 @@ router.get('/diskinfo', function (req, res) {
     return res.send(result)
   })
 })
-router.get('/configure', function (req, res) {
-  res.render('config')
+router.get('/i/:link', function (req, res) {
+  res.sendFile(path.join(__dirname, `../Originals/thumbnails/${req.params.link}.png`))
 })
 
 router.post('/thumb', function (req, res) {
@@ -40,7 +41,14 @@ router.post('/thumb', function (req, res) {
   // store all uploads in the /uploads directory
   form.uploadDir = path.join(__dirname, '../Originals/thumbnails')
   form.on('file', function(field, file) {
-    fs.renameSync(file.path , path.join(form.uploadDir, file.name)) 
+    fs.rename(file.path , path.join(form.uploadDir, file.name), (err) => {
+      if (err) res.status(500).send(err)
+
+      im.convert([path.join(form.uploadDir, file.name), '-resize', '854x480', path.join(form.uploadDir, file.name)], function(err, stdout, stderr){
+        if (err) throw err;
+        console.log('resized kittens.jpg to fit within 256x256px');
+      });
+    }) 
   })
   form.on('error', function(err) {
     res.status(500).send(err)

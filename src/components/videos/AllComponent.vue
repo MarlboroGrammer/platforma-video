@@ -55,8 +55,8 @@
                   <div class="padded-box row">
                     <div class="col-md-4" v-for="(video) in paginated('videos')" :key="video.id">
                       <div class="card text-center">
-                        <img class="card-img-top" :src="'https://48gekijodouga.net/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
-                        <img class="card-img-top" :src="'http://localhost:3000/i/'+video.thumbnail" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
+                        <img class="card-img-top" :src="'https://48gekijodouga.net/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
+                        <img class="card-img-top" :src="'http://localhost:3000/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
                         <div class="card-body">
                         <div class="card-text">
                             <h5 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
