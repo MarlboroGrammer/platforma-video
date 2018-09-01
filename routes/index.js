@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
+var shelljs = require('shelljs')
 var formidable = require('formidable')
 var path = require('path')
 var fs = require('fs')
@@ -28,7 +29,7 @@ router.get('/diskinfo', function (req, res) {
   })
 })
 router.get('/i/:link', function (req, res) {
-  res.sendFile(path.join(__dirname, `../Originals/thumbnails/${req.params.link}.png`))
+  res.sendFile(path.join(__dirname, `../Originals/thumbnails/${req.params.link}.jpg`))
 })
 
 router.post('/thumb', function (req, res) {
@@ -43,12 +44,8 @@ router.post('/thumb', function (req, res) {
   form.on('file', function(field, file) {
     fs.rename(file.path , path.join(form.uploadDir, file.name), (err) => {
       if (err) res.status(500).send(err)
-
-      im.convert([path.join(form.uploadDir, file.name), '-resize', '854x480', path.join(form.uploadDir, file.name)], function(err, stdout, stderr){
-        if (err) throw err;
-        console.log('resized kittens.jpg to fit within 256x256px');
-      });
-    }) 
+      shelljs.exec(path.join(__dirname, '../Scripts/process_thumbnail.sh ' + file.name.split('.')[0]))
+    })
   })
   form.on('error', function(err) {
     res.status(500).send(err)
@@ -97,6 +94,7 @@ router.post('/upload', function(req, res){
       }, 
       path.join(form.uploadDir, `../Originals/thumbnails/`)  , function(err) {
         console.log('screenshots were saved', err)
+	shelljs.exec(path.join(__dirname, '../Scripts/process_thumbnail.sh ' + fname))
       })
     //Database logic
     array.push(

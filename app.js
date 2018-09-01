@@ -33,10 +33,8 @@ app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
 
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
+  res.sendFile(path.join(__dirname, 'index.html'), (err) => {
+    if (err) res.status(500).send(err)
   })
 })
 
