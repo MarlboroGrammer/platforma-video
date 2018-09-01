@@ -79,7 +79,8 @@ router.post('/upload', function(req, res){
     // console.log('File recieved:', file)
   
     // Call ffmpeg to take screenshots
-    let thumb = ''
+    shelljs.exec(`ffmpeg -i ${fnameWithExt} -ss 00:00:15.000 -filter "scale=1024:574" -vframes  1 ${fname}.jpg`)
+    /*let thumb = ''
     var proc = new ffmpeg(path.join(form.uploadDir, fnameWithExt ))
     .on('filenames', function(filenames) {
       console.log('screenshots are ' + filenames)
@@ -95,7 +96,7 @@ router.post('/upload', function(req, res){
       path.join(form.uploadDir, `../Originals/thumbnails/`)  , function(err) {
         console.log('screenshots were saved', err)
 	shelljs.exec(path.join(__dirname, '../Scripts/process_thumbnail.sh ' + fname))
-      })
+      })*/
     //Database logic
     array.push(
       {
