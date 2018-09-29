@@ -15,8 +15,9 @@ var app = express();
 app.set('view engine', 'html');
 
 const BASE_URL = '/api'
+const DISK = '/storage1/'
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -26,8 +27,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 //Serve thumbnails
 // app.use('/i', express.static('Originals/thumbnails'));
-app.use('/o', express.static('Originals'));
-app.use('/e', express.static('Encodes'));
+app.use('/o', express.static(DISK + 'Originals'));
+app.use('/e', express.static(DISK + 'Encodes'));
 app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);

@@ -54,7 +54,7 @@ export default {
         }
 
         let self = this
-        let url = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/api/upload' : 'http://localhost:3000/api/upload'
+        let url = process.env.NODE_ENV === 'production' ? 'https://vidovii.tn/api/upload' : 'http://localhost:3000/api/upload'
         $.ajax({
           url: url,
           type: 'POST',

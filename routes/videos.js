@@ -60,6 +60,6 @@ router.get('/:link', tokenMW.authenticate, function (req, res) {
       res.json(JSON.stringify(rows))
     }
   })
-//  res.sendFile(path.resolve('../encoder/Encodes/' + fileToSend))
+//  res.sendFile(path.resolve('/storage1/encoder/Encodes/' + fileToSend))
 })
 module.exports = router

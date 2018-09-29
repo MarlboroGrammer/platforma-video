@@ -1,5 +1,5 @@
 <?php
-include_once '../../../config/db.php';
+include_once '../../config/db.php';
 $db = new Database();
 $driver = $db->dbConnection();
 $vids = array();

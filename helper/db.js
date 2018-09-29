@@ -1,7 +1,7 @@
 var mysql = require('mysql')
   , async = require('async')
 
-var PRODUCTION_DB = 'gekijodo_platforma'
+var PRODUCTION_DB = 'vidovii_database'
   , TEST_DB = 'platforma'
 
 exports.MODE_TEST = 'mode_test'
@@ -14,9 +14,9 @@ var state = {
 
 exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
-    host: mode === exports.MODE_PRODUCTION ? '41.231.123.23' : 'localhost',
-    user: mode === exports.MODE_PRODUCTION ? 'gekijodouga' : 'root',
-    password: mode === exports.MODE_PRODUCTION ? '[x?8{^5,6.z(' : '',
+    host: mode === exports.MODE_PRODUCTION ? '41.231.123.60' : 'localhost',
+    user: mode === exports.MODE_PRODUCTION ? 'vidovii' : 'root',
+    password: mode === exports.MODE_PRODUCTION ? 'wKe)xnDRHwb9' : '',
     database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
   })
 
