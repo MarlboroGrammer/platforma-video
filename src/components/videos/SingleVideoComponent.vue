@@ -1,6 +1,7 @@
 <template>
   <div>
     {{links}}
+    <div id="rmpPlayer"></div>
   </div>
 </template>
 <style>
@@ -45,6 +46,35 @@ export default {
           this.links.push(`${prefix}/e/${this.id}_h264_480.mp4`)
         }
       }
+          var src = {
+            mp4: [
+              this.links
+            ]
+          };
+          var settings = {
+            licenseKey: 'Kl8lOXN6ZTlzczI3az9yb201ZGFzaXMzMGRiMEElXyo=',
+            // Here are our iframe settings
+            iframeMode: true,
+            iframeAllowed: true,
+            sharing: false,
+            sharingCode: '<iframe width="640" height="266" src="link" style="border:none;" allowfullscreen></iframe>',
+            skin: 's3',
+            src: src,
+            preload: 'auto',
+            poster: 'https://your-poster-url.jpg', //Edit here
+            // ad-blocker detection settings
+            adBlockerDetection: true,
+            adBlockerDetectedPreventPlayback: true,
+            adBlockerDetectedMessage: '動画を再生するために、Adblockを無効にしてください | Please disable your Adblocker to view this video ',
+            ads: true,
+            //Skin
+            skinBackgroundColor: 'rgba(74, 170, 166, 0.75)',
+            skinButtonColor: 'FFFFFF',
+            skinAccentColor: '000000'
+          };
+          var elementID = 'rmpPlayer';
+          var rmp = new RadiantMP(elementID);
+          rmp.init(settings);
     })
   }
 }

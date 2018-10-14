@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+		<title>Vidovii</title>
+		<style>
+			/* This CSS is required to avoid layout issues */
+			html,
+			body {
+			height: 100%;
+			width: 100%;
+			background-color: #000;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="https://cdn.radiantmediatechs.com/rmp/5.0.3/js/rmp.min.js"></script>
+		<div id="rmpPlayer"></div>
+		<h2 style="display:none;" id="vids"><%=links %></h2>
+		<script>
+			// Set up player settings
+			var src = {
+				mp4: document.getElementById('vids').innerHTML.split(',')
+			};
+			let prefix = 'https://vidovii.tn'
+            let thumb = prefix + '/api/i/'
+			if ((src.mp4[0]).indexOf('_') > -1) {
+			thumb += src.mp4[0].split('_')[0].split('/')[4] + '?x=' + new Date()}
+			else {thumb += src.mp4[0].split('.mp4')[0].split('/')[4] + '?x=' + new Date()}
+		    console.log(thumb)
+            var labels = {
+                bitrates: {
+                    renditions: ['HD', 'SD']
+				}
+			};
+			var settings = {
+				licenseKey: 'Kl8lOXN6ZTlzczI3az9yb201ZGFzaXMzMGRiMEElXyo=',
+				// Here are our iframe settings
+				iframeMode: true,
+				iframeAllowed: true,
+				sharing: false,
+				sharingCode: '<iframe width="640" height="266" src="link" style="border:none;" allowfullscreen></iframe>',
+				skin: 's2',
+				src: src,
+				preload: 'auto',
+				poster: thumb,
+                labels: labels,
+				// ad-blocker detection settings
+				adBlockerDetection: true,
+				adBlockerDetectedPreventPlayback: true,
+				adBlockerDetectedMessage: '動画を再生するために、Adblockを無効にしてください | Please disable your Adblocker to view this video ',
+				ads: true,
+				//Skin
+				skinAccentColor: '4AAAA6'
+			};
+			var elementID = 'rmpPlayer';
+			var rmp = new RadiantMP(elementID);
+			rmp.init(settings);
+		</script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56066929-8"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			
+			gtag('config', 'UA-56066929-8');
+		</script>
+		
+	</body>
+</html>

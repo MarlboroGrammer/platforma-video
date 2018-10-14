@@ -1,0 +1,2 @@
+[30-Sep-2018 12:34:23 UTC] PHP Fatal error:  Call to a member function prepare() on null in /home/vidovii/platforma-video/Scripts/check_queue.php on line 18
+[30-Sep-2018 22:52:26 UTC] PHP Fatal error:  Call to a member function prepare() on null in /home/vidovii/platforma-video/Scripts/check_queue.php on line 18

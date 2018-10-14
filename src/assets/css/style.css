@@ -344,7 +344,8 @@ h4, .h4 {
   font-size: 1.5rem; }
 
 h5, .h5 {
-  font-size: 1.25rem; }
+  font-size: 1.25rem;
+  cursor: pointer;}
 
 h6, .h6 {
   font-size: 1rem; }
@@ -6697,7 +6698,7 @@ Jumbotrons / Sliders / Cards
   font-size: 1.1em; }
 
 .card-img-top {
-  opacity: 0.7;
+  opacity: 1;
   height: auto; }
 
 .card {

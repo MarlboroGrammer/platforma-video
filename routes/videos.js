@@ -41,7 +41,7 @@ router.delete('/delete', tokenMW.authenticate, function (req, res) {
         error = true
         return
       } else {
-        shelljs.exec('../Scripts/delete_video.sh ' + link)
+        shelljs.exec('/home/vidovii/platforma-video/Scripts/delete_video.sh ' + link)
       }
     })
   })

@@ -55,11 +55,11 @@
                   <div class="padded-box row">
                     <div class="col-md-4" v-for="(video) in paginated('videos')" :key="video.id">
                       <div class="card text-center">
-                        <img class="card-img-top" :src="'https://vidovii.tn/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
-                        <img class="card-img-top" :src="'http://localhost:3000/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
+                        <img class="card-img-top" style="cursor: pointer;" :src="'https://vidovii.tn/api/i/'+video.link+'?x='+video.created_at" v-on:click="opennewwindow(video.link)" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
+                        <img class="card-img-top" style="cursor: pointer;" :src="'http://localhost:3000/api/i/'+video.link+'?x='+video.created_at" v-on:click="opennewwindow(video.link)" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
                         <div class="card-body">
                         <div class="card-text">
-                            <h5 class="group inner list-group-item-heading" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
+                            <h5 class="group inner list-group-item-heading" v-on:click="opennewwindow(video.link)" style="overflow:hidden;overflow-y:auto;text-overflow: ellipsis;height: 58px;">
                             {{video.title}}
                             </h5>
                             <strong>Encoded:</strong>
@@ -294,6 +294,9 @@ export default {
       setTimeout(() => {
         this.alert = false
       }, 1000)
+    },
+    opennewwindow (link) {
+      window.open('https://vidovii.tn/embed/' + link)
     },
     showStuff (ev) {
       if (ev.target.checked) {

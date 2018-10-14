@@ -213,7 +213,7 @@ function encode_h264_480p($file_path,$id,$driver,$vid,$storage_path)
 	$originalfile_maxbitrate = (int)exec("ffmpeg -i ".$file_path." 2>&1 | grep -o -P '(?<=bitrate:).*(?=kb/s)'");
 	$originalfile_codec = exec("ffmpeg -i ".$file_path." 2>&1 | grep -o -P '(?<=Video: ).*(?= \(avc1)'");
 	echo "\n\n>>> Extension: ".$originalfile_extension." - Bitrate: ".$originalfile_maxbitrate." kb/s - Codec: ".$originalfile_codec."\n";
-	if (($originalfile_maxbitrate<1100) && ($originalfile_extension =="mp4") && (($originalfile_codec == "h264 (Main)")||($originalfile_codec == "h264 (High)")||($originalfile_codec == "h264 (Baseline)")))
+	if (($originalfile_maxbitrate<1000) && ($originalfile_extension =="mp4") && (($originalfile_codec == "h264 (Main)")||($originalfile_codec == "h264 (High)")||($originalfile_codec == "h264 (Baseline)")))
 	{
 	    exec("echo ".get_current_datetime()." [EVENT] [".$id."] No encoding needed for h264 480p. >> /home/vidovii/platforma-video/Log/log.txt");
 		echo ">>> Encoding not needed for SD, only moving.\n\n\n";
