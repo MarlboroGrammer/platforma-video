@@ -55,7 +55,7 @@
                   <div class="padded-box row">
                     <div class="col-md-4" v-for="(video) in paginated('videos')" :key="video.id">
                       <div class="card text-center" v-if="video.public">
-                        <img class="card-img-top" :src="'https://48gekijodouga.net/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
+                        <img class="card-img-top" :src="'https://vidovii.tn/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env === 'production'" :id="'img_' + video.link" />
                         <img class="card-img-top" :src="'http://localhost:3000/api/i/'+video.link+'?x='+video.created_at" alt="Thumbnail" width="330" v-if="env !== 'production'" :id="'img_' + video.link"/>
                         <div class="card-body">
                         <div class="card-text">
@@ -267,7 +267,7 @@ export default {
       const uploadName = e.target.id.split('_')[1] + '.' + file.name.split('.')[1]
       formData.append('uploads[]', file, uploadName)
       console.log(formData)
-      let url = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net/api/thumb' : 'http://localhost:3000/api/thumb'
+      let url = process.env.NODE_ENV === 'production' ? 'https://vidovii.tn/api/thumb' : 'http://localhost:3000/api/thumb'
       $.ajax({
         url: url,
         type: 'POST',

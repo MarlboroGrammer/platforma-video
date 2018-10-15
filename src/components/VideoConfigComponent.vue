@@ -19,7 +19,7 @@
               <span class="glyphicon glyphicon-film"></span> {{video.title}}
             </div>
             <div class="panel-body">
-              <img :src="'http://48gekijodouga.net:3000/i/'+ video.thumbnail" width="300">
+              <img :src="'https://vidovii.tn:3000/i/'+ video.thumbnail" width="300">
               <hr>
               <div class="form-group">
                 <label class="pull-left">Download link</label>
