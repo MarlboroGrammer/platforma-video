@@ -29,9 +29,6 @@
                             <button id="grid" class="btn btn-secondary btn-sm">
                                 <span class="glyphicon glyphicon-search"></span>Search
                             </button>&nbsp;&nbsp;
-                            <button id="grid" class="btn btn-danger btn-sm" v-on:click="()=>deleteToggled=true">
-                                <span class="glyphicon glyphicon-trash"></span>Delete videos
-                            </button>
                         </div>
                     </div>
                 </div>
