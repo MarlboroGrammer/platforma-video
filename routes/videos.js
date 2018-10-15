@@ -5,7 +5,7 @@ var tokenMW = require('./middleware/verifyToken.js')
 var shelljs = require('shelljs')
 var router = express.Router()
 
-router.get('/', tokenMW.authenticate, function (req, res) {
+router.get('/', function (req, res) {
   db.get().query('SELECT * FROM videos ORDER BY id DESC', function (err, rows) {
     if (err) 
     	 return res.send(err)
@@ -48,7 +48,7 @@ router.delete('/delete', tokenMW.authenticate, function (req, res) {
   if(error)
     res.status(500).send(err)
   else
-    res.send('success')
+    res.send('success', {links: links})
 })
 
 router.get('/:link', tokenMW.authenticate, function (req, res) {

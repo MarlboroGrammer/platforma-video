@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import UploadComponent from '@/components/UploadComponent'
 import VideoConfigComponent from '@/components/VideoConfigComponent'
 import DashboardHomeComponent from '@/components/DashboardHomeComponent'
+import HomeComponent from '@/components/HomeComponent'
 import AllComponent from '@/components/videos/AllComponent'
 import LoginComponent from '@/components/LoginComponent'
 import SingleVideoComponent from '@/components/videos/SingleVideoComponent'
@@ -14,31 +15,36 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'HomeComponent',
+      component: HomeComponent
+    },
+    {
+      path: '/dashboard',
       name: 'DashboardHomeComponent',
       component: DashboardHomeComponent
     },
     {
-      path: '/video/new',
+      path: '/dashboard/video/new',
       name: 'UploadComponent',
       component: UploadComponent
     },
     {
-      path: '/video',
+      path: '/dashboard/video',
       name: 'AllComponent',
       component: AllComponent
     },
     {
-      path: '/config',
+      path: '/dashboard/config',
       name: 'VideoConfigComponent',
       component: VideoConfigComponent
     },
     {
-      path: '/login',
+      path: '/dashboard/login',
       name: 'LoginComponent',
       component: LoginComponent
     },
     {
-      path: '/video/:id',
+      path: '/dashboard/video/:id',
       name: 'SingleVideoComponent',
       component: SingleVideoComponent
     }

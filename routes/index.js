@@ -29,7 +29,7 @@ router.get('/diskinfo', function (req, res) {
   })
 })
 router.get('/i/:link', function (req, res) {
-  res.sendFile(path.join('/storage1', `/Originals/thumbnails/${req.params.link}.jpg`))
+  res.sendFile(path.join(__dirname, `../Originals/thumbnails/${req.params.link}.jpg`))
 })
 
 router.post('/thumb', function (req, res) {
@@ -40,7 +40,7 @@ router.post('/thumb', function (req, res) {
   //Specify maximum file size, in this case we need 15GB
   form.maxFileSize = 15000 * 1024 * 1024;
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join('/storage1', '/Originals/thumbnails')
+  form.uploadDir = path.join(__dirname, '../Originals/thumbnails')
   form.on('file', function(field, file) {
     fs.rename(file.path , path.join(form.uploadDir, file.name), (err) => {
       if (err) res.status(500).send(err)
@@ -66,7 +66,7 @@ router.post('/upload', function(req, res){
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join('/storage1', '/Originals')
+  form.uploadDir = path.join(__dirname, '../Originals')
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
@@ -79,15 +79,32 @@ router.post('/upload', function(req, res){
     // console.log('File recieved:', file)
   
     // Call ffmpeg to take screenshots
-    shelljs.exec(`ffmpeg -i /storage1/Originals/${fnameWithExt} -ss 00:00:15.000 -filter "scale=1024:574" -vframes  1 /storage1/Originals/thumbnails/${fname}.jpg`)
+    shelljs.exec(`ffmpeg -i ${fnameWithExt} -ss 00:00:15.000 -filter "scale=1024:574" -vframes  1 ${fname}.jpg`)
+    /*let thumb = ''
+    var proc = new ffmpeg(path.join(form.uploadDir, fnameWithExt ))
+    .on('filenames', function(filenames) {
+      console.log('screenshots are ' + filenames)
+      thumb = filenames
+    })
+    .takeScreenshots(
+      {
+        count: 1,
+        filename: fname,
+        timemarks: [15], // number of seconds
+        size: '854x480' 
+      }, 
+      path.join(form.uploadDir, `../Originals/thumbnails/`)  , function(err) {
+        console.log('screenshots were saved', err)
+	shelljs.exec(path.join(__dirname, '../Scripts/process_thumbnail.sh ' + fname))
+      })*/
     //Database logic
     array.push(
       {
         title: file.name.split('.')[0], 
-        thumbnail: `${fname}.jpg`, 
+        thumbnail: fname + '.jpg', 
         link: fname,
         original_size: file.size,
-        path: '/storage1',
+        path: form.uploadDir.split('\\').join('/'),
         duration: duration
       })
   })

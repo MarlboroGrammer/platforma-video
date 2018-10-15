@@ -13,25 +13,25 @@
               <span class="navbar-toggler-icon"></span>
           </button>
           <!-- Main navigation items -->
-          <div class="collapse navbar-collapse" id="mainNavbar">
+          <div class="collapse navbar-collapse" id="mainNavbar" v-if="this.$route.path !== '/'">
               <ul class="navbar-nav mr-auto">
                   <li data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item">
-                    <router-link class="nav-link" to="/">
+                    <router-link class="nav-link" to="/dashboard">
                       <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home
                     </router-link>
                   </li>
                   <li data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item">
-                    <router-link class="nav-link" to="/video">
+                    <router-link class="nav-link" to="/dashboard/video">
                       <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;All videos
                     </router-link>
                   </li>
                   <li data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item">
-                    <router-link class="nav-link" to="/video/new">
+                    <router-link class="nav-link" to="/dashboard/video/new">
                       <span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;Upload
                     </router-link>
                   </li>
                   <li data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item">
-                    <a class="nav-link" to="/logout" @click="logout()">
+                    <a class="nav-link" to="/dashboard/logout" @click="logout()">
                       <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
                     </a>
                   </li>
@@ -46,8 +46,11 @@
         </div>
       </section>
     </div>
-    <div v-if="!loggedIn">
+    <div v-if="!loggedIn && this.$route.path !== '/'">
       <LoginComponent/>
+    </div>
+    <div v-if="!loggedIn && this.$route.path === '/'">
+      <HomeComponent/>
     </div>
   </div>
 </template>
@@ -58,11 +61,13 @@
 
 <script>
 import LoginComponent from '@/components/LoginComponent'
+import HomeComponent from '@/components/HomeComponent'
 import store from '@/store/store'
 export default {
   name: 'App',
   components: {
-    'LoginComponent': LoginComponent
+    'LoginComponent': LoginComponent,
+    'HomeComponent': HomeComponent
   },
   methods: {
     logout () {

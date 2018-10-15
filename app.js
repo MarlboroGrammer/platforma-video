@@ -1,5 +1,5 @@
 var express = require('express');
-var path = require('path');
+var path = require('path')
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -16,10 +16,8 @@ var app = express();
 app.set('view engine', 'ejs');
 
 const BASE_URL = '/api'
-const DISK = '/storage1/'
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.static('public'));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -28,12 +26,13 @@ app.use(bodyParser.urlencoded({ extended: true, limit:'10gb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 //Serve thumbnails
-// app.use('/i', express.static('Originals/thumbnails'));
-app.use('/o', express.static(DISK + 'Originals'));
-app.use('/e', express.static(DISK + 'Encodes'));
+app.use('/i', express.static('Originals/thumbnails'));
+app.use('/o', express.static('Originals'));
+app.use('/e', express.static('Encodes'));
 app.use(BASE_URL + '/', index);
 app.use(BASE_URL + '/users', users);
 app.use(BASE_URL + '/video', videos);
+
 app.get('/embed/:link', function (req, res) {
   links = []
   db.get().query('SELECT hd_encode, sd_encode, hd, path, CONCAT(path, thumbnail) AS thumbnail_path FROM videos WHERE link = ?', [req.params.link], (err, rows) => {
@@ -63,18 +62,17 @@ app.get('/embed/:link', function (req, res) {
           links.push(`${prefix}/e/${req.params.link}_h264_480.mp4`)
         }
       }
-      console.log(links)
       res.render('embed', {links: links})
     }
   })
   /**/
 })
+
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'), (err) => {
     if (err) res.status(500).send(err)
   })
 })
-
 //Manually enable cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

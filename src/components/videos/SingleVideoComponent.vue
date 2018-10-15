@@ -5,12 +5,21 @@
   </div>
 </template>
 <style>
+  #rmpPlayer {
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
 </style>
 
 <script>
 /* eslint-disable */
 import VideosService from '@/services/VideosService'
 import path from 'path'
+
 export default {
   name: 'SingleVideoComponent',
   data () {
@@ -22,7 +31,7 @@ export default {
   methods: {
   },
   mounted: function () {
-    let prefix = process.env.NODE_ENV === 'production' ? 'https://vidovii.tn' : 'http://localhost:3000'
+    let prefix = process.env.NODE_ENV === 'production' ? 'https://48gekijodouga.net' : 'http://localhost:3000'
     VideosService.getLinks(this.$route.params.id, this.$store.getters.getToken).then(res => {
       let vid = JSON.parse(res.data)[0]
       if (vid.hd) {
@@ -58,14 +67,14 @@ export default {
             iframeAllowed: true,
             sharing: false,
             sharingCode: '<iframe width="640" height="266" src="link" style="border:none;" allowfullscreen></iframe>',
-            skin: 's3',
+            skin: 's1',
             src: src,
             preload: 'auto',
             poster: 'https://your-poster-url.jpg', //Edit here
             // ad-blocker detection settings
             adBlockerDetection: true,
             adBlockerDetectedPreventPlayback: true,
-            adBlockerDetectedMessage: '動画を再生するために、Adblockを無効にしてください | Please disable your Adblocker to view this video ',
+            adBlockerDetectedMessage: '動画を再生するために、Adblockを無効にしてください \n Please disable your Adblocker to view this video ',
             ads: true,
             //Skin
             skinBackgroundColor: 'rgba(74, 170, 166, 0.75)',

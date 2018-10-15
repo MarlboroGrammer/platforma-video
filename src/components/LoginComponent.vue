@@ -111,7 +111,7 @@ export default {
       AuthService.login({email: this.email, password: this.password}).then(resp => {
         store.dispatch('setToken', resp.data.token)
         store.dispatch('setUser', resp.data.user)
-        window.location.href = '/'
+        window.location.href = '/dashboard'
       }).catch(err => {
         this.error = true
         this.erros.push(err)
